@@ -32,7 +32,7 @@ const Navbar = () => {
 export default Navbar;
 
 const NavWrapper = styled.nav`
-  height: 80px;
+  height: 10vh;
   z-index: 2;
   background-color: grey;
   //  margin-top: -80px;
