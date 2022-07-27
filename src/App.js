@@ -10,7 +10,7 @@ import Search from "./pages/Search";
 import SignPage from "./pages/signup/SignPage";
 import LoginForm from "./pages/login/LoginForm";
 import Recipe from "./pages/recipes/Recipe";
-import AuthProvider from "./context/userContext";
+import { AuthProvider } from "./context/userContext";
 
 function App() {
   const themeStyles = lightTheme;
