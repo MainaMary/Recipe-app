@@ -10,11 +10,13 @@ const inputStyles = {
 };
 interface Props {
   onChange?: (val: any) => void;
+  name?: string;
+  value?: string;
 }
-const CustomInput = ({ onChange }: Props) => {
+const CustomInput = ({ onChange, name, value }: Props) => {
   return (
     <div>
-      <FormInput type="text" onChange={onChange} />
+      <FormInput type="text" onChange={onChange} name={name} value={value} />
     </div>
   );
 };

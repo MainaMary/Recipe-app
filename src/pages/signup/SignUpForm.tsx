@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import CustomLabel from "../../components/CustomLabel";
+import { useAuthConsumer } from "../../context/Authcontext";
 const formArr = [
   {
     label: "Username",
@@ -33,9 +34,30 @@ const months = {
 for (const [key, value] of Object.entries(months)) {
   console.log(`${key}`, `${value * 45}`);
 }
+const { signUp } = useAuthConsumer;
+console.log(useAuthConsumer, "consumer");
 const SignUpForm = () => {
+  const [formValues, setFormValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPswd: "",
+  });
+  const [userNameErr, setUserNameErr] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [confirmPswdErr, setConfirmPswdErr] = useState("");
+  const { username, email, password, confirmPswd } = formValues;
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+  const handleFormSubmit = (e: any) => {
+    e.preventDefault();
+    signUp(email, password);
+  };
   return (
-    <FormWrapper>
+    <FormWrapper onSubmit={handleFormSubmit}>
       <Account>
         <p>
           Already have an account? <Link to="/SignupForm">Login</Link>
@@ -47,20 +69,28 @@ const SignUpForm = () => {
       <div style={{ width: "100%" }}>
         <CustomLabel>Username</CustomLabel>
         <input />
-        <CustomInput />
+        <CustomInput value={username} name="username" onChange={handleChange} />
       </div>
       <div>
         <CustomLabel>Email</CustomLabel>
-        <CustomInput />
+        <CustomInput value={email} name="email" onChange={handleChange} />
       </div>
       <Password>
         <div>
           <CustomLabel>Password</CustomLabel>
-          <CustomInput />
+          <CustomInput
+            value={password}
+            name="password"
+            onChange={handleChange}
+          />
         </div>
         <div>
           <CustomLabel>Confirm Password</CustomLabel>
-          <CustomInput />
+          <CustomInput
+            value={confirmPswd}
+            name="confirmPswd"
+            onChange={handleChange}
+          />
         </div>
       </Password>
       <Terms>
