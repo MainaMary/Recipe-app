@@ -9,14 +9,21 @@ const inputStyles = {
   backgroundColor: "#000",
 };
 interface Props {
-  onChange?: (val: any) => void;
-  name?: string;
-  value?: string;
+  onChange: (val: any) => void;
+  name: string;
+  value: string;
+  required?: boolean;
 }
-const CustomInput = ({ onChange, name, value }: Props) => {
+const CustomInput = ({ onChange, name, value, required }: Props) => {
   return (
     <div>
-      <FormInput type="text" onChange={onChange} name={name} value={value} />
+      <FormInput
+        type="text"
+        onChange={onChange}
+        name={name}
+        value={value}
+        required={required}
+      />
     </div>
   );
 };

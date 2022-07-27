@@ -73,7 +73,12 @@ const SignUpForm = () => {
       </div>
       <div>
         <CustomLabel>Email</CustomLabel>
-        <CustomInput value={email} name="email" onChange={handleChange} />
+        <CustomInput
+          value={email}
+          name="email"
+          onChange={handleChange}
+          required
+        />
       </div>
       <Password>
         <div>
@@ -82,6 +87,7 @@ const SignUpForm = () => {
             value={password}
             name="password"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
