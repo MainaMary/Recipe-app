@@ -15,25 +15,25 @@ import { AuthProvider } from "./context/userContext";
 function App() {
   const themeStyles = lightTheme;
   return (
-    <AuthProvider>
-      <ThemeProvider theme={themeStyles}>
-        <div className="App">
-          <GlobalStyle />
+    <ThemeProvider theme={themeStyles}>
+      <div className="App">
+        <GlobalStyle />
 
-          <Router>
-            <Navbar />
+        <Router>
+          <AuthProvider>
             <Routes>
               <Route index path="/" element={<SignPage />} />
+              <Navbar />
               <Route path="/home" element={<Homepage />} />
               <Route path="/recipe" element={<Recipe />} />
               <Route path="/restaurants" element={<Restaurant />} />
               <Route path="/Search" element={<Search />} />
               <Route path="/SignupForm" element={<LoginForm />} />
             </Routes>
-          </Router>
-        </div>
-      </ThemeProvider>
-    </AuthProvider>
+          </AuthProvider>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 

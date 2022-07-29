@@ -2,21 +2,24 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 
-const Authcontext = createContext({});
+const Authcontext = createContext(null);
 //acess data from the provider and make it accessible at any hierarchy level of the app
 export const useAuthConsumer = () => {
   return useContext(Authcontext);
 };
-interface Props {
+interface IProps {
   children: JSX.Element;
 }
-export const AuthProvider = ({ children }: Props) => {
+export const AuthProvider = ({ children }: IProps) => {
   const [currentUser, setCurrentUser] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscriber = auth.onAuthStateChanged((user: string) => {
       setCurrentUser(user);
+      setLoading(false);
     });
+
     //unsubscribe from onAuth when the component is unmounted
     return unsubscriber;
   }, []);

@@ -34,8 +34,9 @@ const months = {
 for (const [key, value] of Object.entries(months)) {
   console.log(`${key}`, `${value * 45}`);
 }
+
 const { signUp } = useAuthConsumer;
-console.log(useAuthConsumer, "consumer");
+
 const SignUpForm = () => {
   const [formValues, setFormValues] = useState({
     username: "",
@@ -47,14 +48,49 @@ const SignUpForm = () => {
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [confirmPswdErr, setConfirmPswdErr] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { username, email, password, confirmPswd } = formValues;
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
-  const handleFormSubmit = (e: any) => {
-    e.preventDefault();
-    signUp(email, password);
+  const validateEmail = (email: string) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+  const handleValidation = () => {
+    if (!email) {
+      setUserNameErr("Username is required");
+    }
+    if (!email) {
+      setEmailErr("Email is required");
+    } else if (!validateEmail(email)) {
+      setEmailErr("Valid email adress is required");
+    }
+    if (!password) {
+      setPasswordErr("Password is required");
+    }
+    if (!confirmPswd) {
+      setConfirmPswdErr("Confirm password is required");
+    }
+    if (password && password !== confirmPswd) {
+      setConfirmPswdErr("Passwords need to match");
+    }
+  };
+  const handleFormSubmit = async (event: any) => {
+    event.preventDefault();
+    handleValidation();
+    try {
+      setError("");
+      await signUp(email, password);
+    } catch {
+      setError("Failed to create an account. Please try again");
+    }
+    setLoading(false);
   };
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
@@ -63,6 +99,7 @@ const SignUpForm = () => {
           Already have an account? <Link to="/SignupForm">Login</Link>
         </p>
       </Account>
+      <div>{error}</div>
       <div>
         <h2>Create an account</h2>
       </div>
@@ -106,6 +143,9 @@ const SignUpForm = () => {
           and privacy policy
         </p>
       </Terms>
+      <div>
+        <button disabled={loading}>Sign up</button>
+      </div>
     </FormWrapper>
   );
 };
