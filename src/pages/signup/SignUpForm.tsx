@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import CustomLabel from "../../components/CustomLabel";
 import { useAuthConsumer } from "../../context/Authcontext";
+import { auth } from "../../firebase";
 const formArr = [
   {
     label: "Username",
@@ -35,7 +36,8 @@ for (const [key, value] of Object.entries(months)) {
   console.log(`${key}`, `${value * 45}`);
 }
 
-const { signUp } = useAuthConsumer;
+const { signUp, currentUser } = useAuthConsumer();
+console.log({ currentUser });
 
 const SignUpForm = () => {
   const [formValues, setFormValues] = useState({
@@ -86,7 +88,7 @@ const SignUpForm = () => {
     handleValidation();
     try {
       setError("");
-      await signUp(email, password);
+      await signUp(auth, email, password);
     } catch {
       setError("Failed to create an account. Please try again");
     }

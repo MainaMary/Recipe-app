@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import LoginForm from "./SignUpForm";
-import Img from "../../assets/images/login-image.png";
+// import Img from ;
+
+const Img = require("../../assets/images/login-image.png");
 
 const SignPage = () => {
   return (

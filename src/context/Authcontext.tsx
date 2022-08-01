@@ -1,39 +1,61 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
 
-const Authcontext = createContext(null);
+interface Props {
+  currentUser: User | null;
+  signUp: (auth: any, email: string, password: string) => void;
+}
+
+const Authcontext = createContext<Props>({
+  currentUser: null,
+  signUp: () => {},
+});
+
 //acess data from the provider and make it accessible at any hierarchy level of the app
-export const useAuthConsumer = () => {
-  return useContext(Authcontext);
-};
+
 interface IProps {
   children: JSX.Element;
 }
 export const AuthProvider = ({ children }: IProps) => {
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscriber = auth.onAuthStateChanged((user: string) => {
+    const unsubscriber = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
-
     //unsubscribe from onAuth when the component is unmounted
     return unsubscriber;
   }, []);
-  const signUp = (email: string, password: string) => {
-    return auth.createUserWithEmailAndPassword(email, password);
+
+  const signUp = (auth: any, email: string, password: string) => {
+    const register = createUserWithEmailAndPassword(auth, email, password);
+    return register;
   };
-  interface Props {
-    currentUser: string;
-    signUp: (x: string, y: string) => void;
-  }
+  // const signUp = async (email: string, password: string) => {
+  //   try {
+  //     const user = await createUserWithEmailAndPassword(auth, email, password);
+  //     console.log(user);
+  //     return user;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const value: Props = {
     currentUser,
     signUp,
   };
 
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
+};
+
+export const useAuthConsumer = () => {
+  return useContext(Authcontext);
 };
