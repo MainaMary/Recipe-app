@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import CustomLabel from "../../components/CustomLabel";
-import { useAuthConsumer } from "../../context/Authcontext";
+import { Authcontext } from "../../context/Authcontext";
 import { auth } from "../../firebase";
 const formArr = [
   {
@@ -36,10 +36,9 @@ for (const [key, value] of Object.entries(months)) {
   console.log(`${key}`, `${value * 45}`);
 }
 
-const { signUp, currentUser } = useAuthConsumer();
-console.log({ currentUser });
-
 const SignUpForm = () => {
+  const { signUp, currentUser } = useContext(Authcontext);
+  console.log({ currentUser });
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -105,12 +104,11 @@ const SignUpForm = () => {
       <div>
         <h2>Create an account</h2>
       </div>
-      <div style={{ width: "100%" }}>
+      <Box>
         <CustomLabel>Username</CustomLabel>
-        <input />
         <CustomInput value={username} name="username" onChange={handleChange} />
-      </div>
-      <div>
+      </Box>
+      <Box>
         <CustomLabel>Email</CustomLabel>
         <CustomInput
           value={email}
@@ -118,9 +116,9 @@ const SignUpForm = () => {
           onChange={handleChange}
           required
         />
-      </div>
+      </Box>
       <Password>
-        <div>
+        <Box>
           <CustomLabel>Password</CustomLabel>
           <CustomInput
             value={password}
@@ -128,15 +126,15 @@ const SignUpForm = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
+        </Box>
+        <Box>
           <CustomLabel>Confirm Password</CustomLabel>
           <CustomInput
             value={confirmPswd}
             name="confirmPswd"
             onChange={handleChange}
           />
-        </div>
+        </Box>
       </Password>
       <Terms>
         <input type="checkbox" />
@@ -156,6 +154,13 @@ export default SignUpForm;
 const FormWrapper = styled.form`
   padding: 12px 18px;
   border-left: 1px solid #000;
+  @media (max-width: 800px) {
+    width: "100%";
+    padding: "12px 10px";
+  }
+`;
+const Box = styled.div`
+  width: 100%;
 `;
 const Account = styled.div``;
 const Input = styled.div``;
@@ -168,6 +173,8 @@ const Terms = styled.div`
 `;
 const Password = styled.div`
   display: flex;
-  width: 50%;
-  gap: 8px;
+  width: 100%;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;

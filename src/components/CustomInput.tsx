@@ -1,7 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import "../App.css";
 
 const inputStyles = {
+  borderRadius: "5px",
+  padding: "5px 9px",
+  outline: "none",
+  width: "100%",
+  backgroundColor: "#000",
+};
+const InputStyles = {
   borderRadius: "5px",
   padding: "5px 9px",
   outline: "none",
@@ -14,25 +22,18 @@ interface Props {
   value: string;
   required?: boolean;
 }
+
 const CustomInput = ({ onChange, name, value, required }: Props) => {
   return (
-    <div>
-      <FormInput
-        type="text"
-        onChange={onChange}
-        name={name}
-        value={value}
-        required={required}
-      />
-    </div>
+    <input
+      type="text"
+      onChange={onChange}
+      name={name}
+      value={value}
+      required={required}
+      className="input-styles"
+    />
   );
 };
 
 export default CustomInput;
-const FormInput = styled.input`
-border-radius: 5px,
-padding: 5px 9px,
-outline: none,
-width: 100%,
-backgroundColor: #000,
-`;

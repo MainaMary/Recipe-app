@@ -10,7 +10,7 @@ import Search from "./pages/Search";
 import SignPage from "./pages/signup/SignPage";
 import LoginForm from "./pages/login/LoginForm";
 import Recipe from "./pages/recipes/Recipe";
-import { AuthProvider } from "./context/userContext";
+import AuthProvider from "./context/Authcontext";
 
 function App() {
   const themeStyles = lightTheme;
@@ -21,9 +21,10 @@ function App() {
 
         <Router>
           <AuthProvider>
+            <Navbar />
             <Routes>
               <Route index path="/" element={<SignPage />} />
-              <Navbar />
+
               <Route path="/home" element={<Homepage />} />
               <Route path="/recipe" element={<Recipe />} />
               <Route path="/restaurants" element={<Restaurant />} />

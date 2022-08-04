@@ -11,17 +11,21 @@ interface Props {
   signUp: (auth: any, email: string, password: string) => void;
 }
 
-const Authcontext = createContext<Props>({
+export const Authcontext = createContext<Props>({
   currentUser: null,
   signUp: () => {},
 });
 
 //acess data from the provider and make it accessible at any hierarchy level of the app
+// export const useAuthConsumer = () => {
+//   return useContext(Authcontext);
+// };
 
 interface IProps {
   children: JSX.Element;
 }
-export const AuthProvider = ({ children }: IProps) => {
+
+const AuthProvider = ({ children }: IProps) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -55,7 +59,4 @@ export const AuthProvider = ({ children }: IProps) => {
 
   return <Authcontext.Provider value={value}>{children}</Authcontext.Provider>;
 };
-
-export const useAuthConsumer = () => {
-  return useContext(Authcontext);
-};
+export default AuthProvider;

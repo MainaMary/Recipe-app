@@ -41,6 +41,9 @@ const Image = styled.div`
     margin: auto;
     text-align: center;
   }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 const LogIn = styled.div`
   width: 100%;
