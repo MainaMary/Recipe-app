@@ -10,30 +10,31 @@ import Search from "./pages/Search";
 import SignPage from "./pages/signup/SignPage";
 import LoginForm from "./pages/login/LoginForm";
 import Recipe from "./pages/recipes/Recipe";
-import { AuthProvider } from "./context/userContext";
+import AuthProvider from "./context/Authcontext";
 
 function App() {
   const themeStyles = lightTheme;
   return (
-    <AuthProvider>
-      <ThemeProvider theme={themeStyles}>
-        <div className="App">
-          <GlobalStyle />
+    <ThemeProvider theme={themeStyles}>
+      <div className="App">
+        <GlobalStyle />
 
-          <Router>
+        <Router>
+          <AuthProvider>
             <Navbar />
             <Routes>
               <Route index path="/" element={<SignPage />} />
+
               <Route path="/home" element={<Homepage />} />
               <Route path="/recipe" element={<Recipe />} />
               <Route path="/restaurants" element={<Restaurant />} />
               <Route path="/Search" element={<Search />} />
               <Route path="/SignupForm" element={<LoginForm />} />
             </Routes>
-          </Router>
-        </div>
-      </ThemeProvider>
-    </AuthProvider>
+          </AuthProvider>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
