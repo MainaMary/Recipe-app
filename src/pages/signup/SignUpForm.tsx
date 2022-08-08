@@ -79,7 +79,7 @@ const SignUpForm = () => {
       setConfirmPswdErr("Confirm password is required");
     }
     if (password && password !== confirmPswd) {
-      setConfirmPswdErr("Passwords need to match");
+      setConfirmPswdErr("Passwords do not match");
     }
   };
   const handleFormSubmit = async (event: any) => {
@@ -87,7 +87,7 @@ const SignUpForm = () => {
     handleValidation();
     try {
       setError("");
-      await signUp(auth, email, password);
+      signUp(auth, email, password);
     } catch {
       setError("Failed to create an account. Please try again");
     }
