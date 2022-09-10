@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import LoginForm from "./SignUpForm";
-// import Img from ;
+import SignupForm from "./SignupForm";
 
 const Img = require("../../assets/images/login-image.png");
 
-const SignPage = () => {
+const SignupPage = () => {
   return (
     <Wrapper>
       <Main>
@@ -13,14 +12,14 @@ const SignPage = () => {
           <img alt="login" src={Img} />
         </Image>
         <LogIn>
-          <LoginForm />
+          <SignupForm />
         </LogIn>
       </Main>
     </Wrapper>
   );
 };
 
-export default SignPage;
+export default SignupPage;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;

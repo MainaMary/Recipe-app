@@ -34,7 +34,7 @@ export default Navbar;
 const NavWrapper = styled.nav`
   height: 10vh;
   z-index: 2;
-  background-color: grey;
+  background-color: #2a45cd;
   //  margin-top: -80px;
   display: flex;
   justify-content: space-between;
@@ -49,6 +49,7 @@ const NavWrapper = styled.nav`
 const NavLogo = styled(Link)`
   text-decoration: none;
   font-size: 1.5rem;
+  color: #fff;
 `;
 const ListWrap = styled.ul`
   display: flex;
@@ -68,6 +69,7 @@ const Items = styled.li`
   a {
     text-decoration: none;
     padding: 0 20px;
+    color: #fff;
   }
 `;
 
