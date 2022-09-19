@@ -23,7 +23,9 @@ const Search = () => {
     fetchRecipes
   );
   console.log(isSuccess && data?.data?.recipes, "data");
-  const handleImage = (id: string) => {};
+  const handleImage = (id: string) => {
+    navigate(`/recipe/${id}`);
+  };
   return (
     <>
       {isLoading ? (
