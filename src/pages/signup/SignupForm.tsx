@@ -5,6 +5,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomLabel from "../../components/CustomLabel";
 import { Authcontext } from "../../context/Authcontext";
 import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 const formArr = [
   {
     label: "Username",
@@ -36,7 +37,8 @@ for (const [key, value] of Object.entries(months)) {
   console.log(`${key}`, `${value * 45}`);
 }
 
-const SignUpForm = () => {
+const SignupForm = () => {
+  const navigate = useNavigate();
   const { signUp, currentUser } = useContext(Authcontext);
   console.log({ currentUser });
   const [formValues, setFormValues] = useState({
@@ -95,9 +97,19 @@ const SignUpForm = () => {
   };
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
-      <Account>
+      <Account onClick={() => navigate("/login")}>
         <p>
-          Already have an account? <Link to="/SignupForm">Login</Link>
+          Already have an account?{" "}
+          <span
+            style={{
+              color: "#2a45cd",
+              textDecoration: "underline",
+              marginLeft: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Login
+          </span>
         </p>
       </Account>
       <div>{error}</div>
@@ -150,7 +162,7 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignupForm;
 const FormWrapper = styled.form`
   padding: 12px 18px;
   border-left: 1px solid #000;
