@@ -2,7 +2,14 @@ import React from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import styled from "styled-components";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useNavigate } from "react-router-dom";
+
+interface Props {
+  onClick: (x: any) => void;
+}
 const Search = () => {
+  let navigate = useNavigate();
   const fetchRecipes = async () => {
     const res = await axios.get(
       `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10`
@@ -16,6 +23,7 @@ const Search = () => {
     fetchRecipes
   );
   console.log(isSuccess && data?.data?.recipes, "data");
+  const handleImage = (id: string) => {};
   return (
     <>
       {isLoading ? (
@@ -29,10 +37,10 @@ const Search = () => {
                 {isLoading ? (
                   <p>Loader..</p>
                 ) : (
-                  <img
+                  <LazyLoadImage
                     src={recipe.image}
                     alt={recipe.title}
-                    style={{ width: "100%", height: "auto" }}
+                    onClick={() => handleImage(recipe.id)}
                   />
                 )}
               </Box>
@@ -48,9 +56,11 @@ export default Search;
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  background-color: blue;
   gap: 10px;
   width: 100%;
+  @media only screen and (max-width: 767px) : {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 const Box = styled.div`
   min-height: 1rem;
