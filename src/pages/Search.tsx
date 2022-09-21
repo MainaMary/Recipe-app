@@ -5,9 +5,6 @@ import styled from "styled-components";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 
-interface Props {
-  onClick: (x: any) => void;
-}
 const Search = () => {
   let navigate = useNavigate();
   const fetchRecipes = async () => {
@@ -35,7 +32,7 @@ const Search = () => {
           {isSuccess &&
             data?.data?.recipes.map((recipe: any, index: number) => (
               <Box key={index}>
-                <h2>{recipe.title}</h2>
+                <Title>{recipe.title}</Title>
                 {isLoading ? (
                   <p>Loader..</p>
                 ) : (
@@ -64,10 +61,14 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 `;
+const Title = styled.h2`
+  font-size: 12px;
+  margin-bottom: 12px;
+`;
 const Box = styled.div`
-  min-height: 1rem;
-  width: 400px;
-  margin: auto;
+  height: 300px;
+  width: 300px;
+  margin: 12px auto;
   border-radius: 10px;
   overflow: hidden;
 
