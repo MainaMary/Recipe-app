@@ -3,6 +3,10 @@ import SignupPage from "./pages/signup/SignupPage";
 import Homepage from "./pages/Homepage";
 import Restaurant from "./pages/Restaurant";
 import LoginPage from "./pages/login/LoginPage";
+import Meal from "./pages/Meal";
+import Recipe from "./pages/recipes/Recipe";
+import { Instructions } from "./pages/Meal";
+import { Ingredients } from "./pages/Meal";
 
 const routes = [
   {
@@ -20,6 +24,22 @@ const routes = [
   {
     path: "/restaurant",
     component: <Restaurant />,
+  },
+  {
+    path: "/recipe",
+    component: <Recipe />,
+  },
+  {
+    path: `/recipe/:id`,
+    component: <Meal />,
+  },
+  {
+    path: `/recipe/:id/instructions`,
+    component: <Instructions />,
+  },
+  {
+    path: `/recipe/:id/ingredients`,
+    component: <Ingredients />,
   },
 ];
 const MainRoutes = () => {
