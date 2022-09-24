@@ -33,8 +33,21 @@ export const Instructions = (props: IProps) => {
 };
 export const Ingredients = (props: IngredientsProps) => {
   const { ingredients } = props;
-  console.log(ingredients, "ingredients");
-  return <div>Ingredients</div>;
+  return (
+    <ul
+      style={{
+        width: "50%",
+        margin: "auto",
+        textAlign: "start",
+      }}
+    >
+      {ingredients.map((item: any) => (
+        <li style={{ color: "#B5B5B5", margin: "10px 0" }} key={item.id}>
+          {item.name} - {item.unit}
+        </li>
+      ))}
+    </ul>
+  );
 };
 const Meal = () => {
   const [toggle, setToggle] = useState<number>(1);
@@ -123,4 +136,14 @@ const Type = styled.p`
 `;
 const Tab = styled.h2`
   display: flex;
+  justifycontent: center;
+  margin: auto;
+`;
+const Box = styled.ul`
+width: "50%",
+margin: "auto",
+textAlign: "start",`;
+const List = styled.li`
+color: "#B5B5B5", 
+margin: "10px 0"
 `;
