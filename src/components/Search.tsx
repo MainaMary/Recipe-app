@@ -5,11 +5,11 @@ import axios from "axios";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
-  const handleSearch = (e) => {
+  const handleSearch = (e: any) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
   };
   return (
