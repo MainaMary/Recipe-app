@@ -7,7 +7,7 @@ import { lightTheme } from "./styles/theme";
 import Navbar from "./components/Navbar";
 import Homepage from "./pages/Homepage";
 import Restaurant from "./pages/Restaurant";
-import Search from "./pages/Search";
+import Search from "./pages/Home";
 import SignPage from "./pages/signup/SignupPage";
 import LoginForm from "./pages/signup/SignupForm";
 import Recipe from "./pages/recipes/Recipe";
