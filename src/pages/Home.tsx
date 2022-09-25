@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 
-const Search = () => {
+const Home = () => {
   let navigate = useNavigate();
   const fetchRecipes = async () => {
     const res = await axios.get(
@@ -29,28 +29,30 @@ const Search = () => {
         <p>Loading...</p>
       ) : (
         <Wrapper>
-          {isSuccess &&
-            data?.data?.recipes.map((recipe: any, index: number) => (
-              <Box key={index}>
-                <Title>{recipe.title}</Title>
-                {isLoading ? (
-                  <p>Loader..</p>
-                ) : (
-                  <LazyLoadImage
-                    src={recipe.image}
-                    alt={recipe.title}
-                    onClick={() => handleImage(recipe.id)}
-                  />
-                )}
-              </Box>
-            ))}
+          <>
+            {isSuccess &&
+              data?.data?.recipes.map((recipe: any, index: number) => (
+                <Box key={index}>
+                  <Title>{recipe.title}</Title>
+                  {isLoading ? (
+                    <p>Loader..</p>
+                  ) : (
+                    <LazyLoadImage
+                      src={recipe.image}
+                      alt={recipe.title}
+                      onClick={() => handleImage(recipe.id)}
+                    />
+                  )}
+                </Box>
+              ))}
+          </>
         </Wrapper>
       )}
     </>
   );
 };
 
-export default Search;
+export default Home;
 
 const Wrapper = styled.div`
   display: grid;
@@ -67,7 +69,7 @@ const Title = styled.h2`
 `;
 const Box = styled.div`
   height: 300px;
-  width: 300px;
+  width: 400px;
   margin: 12px auto;
   border-radius: 10px;
   overflow: hidden;
