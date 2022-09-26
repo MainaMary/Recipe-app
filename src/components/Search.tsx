@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import axios from "axios";
+import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
+  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = (e: any) => {
     setSearchValue(e.target.value);
@@ -11,6 +13,7 @@ const Search = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    navigate(`/search/${searchValue}`);
   };
   return (
     <Wrapper onSubmit={handleSubmit}>
@@ -20,7 +23,9 @@ const Search = () => {
         onChange={handleSearch}
         placeholder={"Search..."}
       />
-      <Button>Search</Button>
+      <Button>
+        <FaSearch />
+      </Button>
     </Wrapper>
   );
 };
@@ -30,6 +35,9 @@ const Input = styled.input`
   width: 50%;
   padding: 10px 16px;
   outline: none;
+  border-top-left-radius: 5px;
+
+  border-bottom-left-radius: 5px;
 `;
 const Wrapper = styled.form`
   padding: 30px 20px;
@@ -37,4 +45,12 @@ const Wrapper = styled.form`
   justify-content: center;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  padding: 0 12px;
+  display: flex;
+  height: auto;
+  align-items: center;
+  border-left: none;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+`;

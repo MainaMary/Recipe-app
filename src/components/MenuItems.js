@@ -13,8 +13,8 @@ export const Menu = [
   },
   {
     id: 3,
-    title: "Restaurants",
-    url: "/restaurants",
+    title: "Cuisines",
+    url: "/cuisines",
     className: "navLink",
   },
   // {

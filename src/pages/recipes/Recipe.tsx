@@ -1,6 +1,6 @@
 import React from "react";
-import Home from "../Home";
 import Search from "../../components/Search";
+import Home from "../Home";
 
 const Recipe = () => {
   return (
