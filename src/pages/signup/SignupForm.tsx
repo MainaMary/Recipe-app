@@ -6,28 +6,7 @@ import CustomLabel from "../../components/CustomLabel";
 import { Authcontext } from "../../context/Authcontext";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-const formArr = [
-  {
-    label: "Username",
-    name: "username",
-    type: "text",
-  },
-  {
-    label: "Email",
-    name: "email",
-    type: "text",
-  },
-  {
-    label: "Password",
-    name: "password",
-    type: "password",
-  },
-  {
-    label: "Confirm password",
-    name: "confirm password",
-    type: "password",
-  },
-];
+import { UserContext } from "../../context/UserContext";
 const months = {
   january: 30,
   february: 45,
@@ -39,7 +18,8 @@ for (const [key, value] of Object.entries(months)) {
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const { signUp, currentUser } = useContext(Authcontext);
+  // const { signUp, currentUser } = useContext(Authcontext);
+  const { currentUser, signUp } = useContext(UserContext);
   console.log({ currentUser });
   const [formValues, setFormValues] = useState({
     username: "",
@@ -84,19 +64,88 @@ const SignupForm = () => {
       setConfirmPswdErr("Passwords do not match");
     }
   };
-  const handleFormSubmit = async (event: any) => {
-    event.preventDefault();
+  // const handleFormSubmit = async (event: any) => {
+  //   event.preventDefault();
+  //   handleValidation();
+  //   try {
+  //     setError("");
+  //     signUp(auth, email, password);
+  //   } catch {
+  //     setError("Failed to create an account. Please try again");
+  //   }
+  //   setLoading(false);
+  // };
+  const handleFormSubmit = async (e: any) => {
+    e.preventDefault();
     handleValidation();
     try {
-      setError("");
+      console.log(email, password);
       signUp(auth, email, password);
+      setLoading(true);
+      setError("");
     } catch {
-      setError("Failed to create an account. Please try again");
+      setError("Account creation failed");
     }
     setLoading(false);
   };
+
+  console.log(userNameErr, passwordErr, emailErr, confirmPswdErr);
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
+      <div>{error}</div>
+      <div>
+        <h2>Create an account</h2>
+      </div>
+      <h2>{currentUser?.email}</h2>
+
+      <Box>
+        <CustomLabel>Username</CustomLabel>
+        <CustomInput value={username} name="username" onChange={handleChange} />
+        <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
+          {userNameErr ? userNameErr : ""}
+        </div>
+      </Box>
+      <Box>
+        <CustomLabel>Email</CustomLabel>
+        <CustomInput value={email} name="email" onChange={handleChange} />
+        <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
+          {emailErr ? emailErr : ""}
+        </div>
+      </Box>
+      <Password>
+        <PasswordWrap>
+          <CustomLabel>Password</CustomLabel>
+          <CustomInput
+            value={password}
+            name="password"
+            onChange={handleChange}
+          />
+          <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
+            {passwordErr ? passwordErr : ""}
+          </div>
+        </PasswordWrap>
+        <PasswordWrap>
+          <CustomLabel>Confirm Password</CustomLabel>
+          <CustomInput
+            value={confirmPswd}
+            name="confirmPswd"
+            onChange={handleChange}
+          />
+          <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
+            {confirmPswdErr ? confirmPswdErr : ""}
+          </div>
+        </PasswordWrap>
+      </Password>
+      <Terms>
+        <input type="checkbox" />
+        <p style={{ width: "95%" }}>
+          By creating an account, you agree to the terms of service conditions
+          and privacy policy
+        </p>
+      </Terms>
+      <Box>
+        <Button disabled={loading}>Sign up</Button>
+      </Box>
       <Account onClick={() => navigate("/login")}>
         <p>
           Already have an account?{" "}
@@ -112,52 +161,6 @@ const SignupForm = () => {
           </span>
         </p>
       </Account>
-      <div>{error}</div>
-      <div>
-        <h2>Create an account</h2>
-      </div>
-      <Box>
-        <CustomLabel>Username</CustomLabel>
-        <CustomInput value={username} name="username" onChange={handleChange} />
-      </Box>
-      <Box>
-        <CustomLabel>Email</CustomLabel>
-        <CustomInput
-          value={email}
-          name="email"
-          onChange={handleChange}
-          required
-        />
-      </Box>
-      <Password>
-        <Box>
-          <CustomLabel>Password</CustomLabel>
-          <CustomInput
-            value={password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </Box>
-        <Box>
-          <CustomLabel>Confirm Password</CustomLabel>
-          <CustomInput
-            value={confirmPswd}
-            name="confirmPswd"
-            onChange={handleChange}
-          />
-        </Box>
-      </Password>
-      <Terms>
-        <input type="checkbox" />
-        <p>
-          By creating an account, you agree to the terms of service conditions
-          and privacy policy
-        </p>
-      </Terms>
-      <div>
-        <button disabled={loading}>Sign up</button>
-      </div>
     </FormWrapper>
   );
 };
@@ -167,18 +170,25 @@ const FormWrapper = styled.form`
   padding: 12px 18px;
   border-left: 1px solid #000;
   @media (max-width: 800px) {
-    width: "100%";
+    width: "70%";
     padding: "12px 10px";
   }
 `;
 const Box = styled.div`
   width: 100%;
+  margin: 12px 0;
 `;
-const Account = styled.div``;
-const Input = styled.div``;
+const PasswordWrap = styled.div`
+  width: 45%;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+`;
 const Terms = styled.div`
   display: flex;
-
+  margin: 12px 0;
+  width: 100%;
+  justify-content: space-between;
   p: {
     margin-top: 5px;
   }
@@ -186,7 +196,19 @@ const Terms = styled.div`
 const Password = styled.div`
   display: flex;
   width: 100%;
+  justify-content: space-between;
   @media (max-width: 800px) {
     flex-direction: column;
   }
+`;
+const Account = styled.div``;
+const Button = styled.button`
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background-color: #2a45cd;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
 `;

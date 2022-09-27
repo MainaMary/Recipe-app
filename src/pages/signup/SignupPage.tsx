@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SignupForm from "./SignupForm";
 
-const Img = require("../../assets/images/login-image.png");
+const Img = require("../../assets/images/harmburger.png");
 
 const SignupPage = () => {
   return (
@@ -28,17 +28,24 @@ const Wrapper = styled.div`
 `;
 const Main = styled.div`
   display: flex;
-  width: 70%;
+  width: 100%;
+  max-width: 1000px;
   border-radius: 5px;
   box-shadow: 0 0 3px;
+  @media (max-width: 800px) {
+    width: "70%";
+    max-width: 600px;
+  }
 `;
 const Image = styled.div`
   width: 100%;
   text-align: center;
+  height: 300px;
 
   img {
     margin: auto;
     text-align: center;
+    height: 100%;
   }
   @media (max-width: 768px) {
     display: none;

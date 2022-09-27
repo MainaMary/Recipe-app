@@ -1,11 +1,5 @@
 export const Menu = [
   {
-    id: 1,
-    title: "Home",
-    url: "/home",
-    className: "navLink",
-  },
-  {
     id: 2,
     title: "Recipes",
     url: "/recipe",
@@ -13,8 +7,8 @@ export const Menu = [
   },
   {
     id: 3,
-    title: "Restaurants",
-    url: "/restaurants",
+    title: "Cuisines",
+    url: "/cuisines",
     className: "navLink",
   },
   // {

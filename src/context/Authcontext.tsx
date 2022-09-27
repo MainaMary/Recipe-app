@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: IProps) => {
   }, []);
 
   const signUp = (auth: any, email: string, password: string) => {
-    const register = createUserWithEmailAndPassword(auth, email, password);
+    const register = auth.createUserWithEmailAndPassword(auth, email, password);
     return register;
   };
   // const signUp = async (email: string, password: string) => {

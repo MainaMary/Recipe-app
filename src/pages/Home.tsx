@@ -29,23 +29,21 @@ const Home = () => {
         <p>Loading...</p>
       ) : (
         <Wrapper>
-          <>
-            {isSuccess &&
-              data?.data?.recipes.map((recipe: any, index: number) => (
-                <Box key={index}>
-                  <Title>{recipe.title}</Title>
-                  {isLoading ? (
-                    <p>Loader..</p>
-                  ) : (
-                    <LazyLoadImage
-                      src={recipe.image}
-                      alt={recipe.title}
-                      onClick={() => handleImage(recipe.id)}
-                    />
-                  )}
-                </Box>
-              ))}
-          </>
+          {isSuccess &&
+            data?.data?.recipes.map((recipe: any, index: number) => (
+              <Box key={index}>
+                <Title>{recipe.title}</Title>
+                {isLoading ? (
+                  <p>Loader..</p>
+                ) : (
+                  <LazyLoadImage
+                    src={recipe.image}
+                    alt={recipe.title}
+                    onClick={() => handleImage(recipe.id)}
+                  />
+                )}
+              </Box>
+            ))}
         </Wrapper>
       )}
     </>
@@ -56,12 +54,8 @@ export default Home;
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-  @media only screen and (max-width: 767px) : {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-gap: 3rem;
 `;
 const Title = styled.h2`
   font-size: 12px;
@@ -73,6 +67,8 @@ const Box = styled.div`
   margin: 12px auto;
   border-radius: 10px;
   overflow: hidden;
+  margin: 12px auto;
+  padding: 10px 20px;
 
   img {
     border-radius: 10px;

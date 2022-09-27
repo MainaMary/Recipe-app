@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { lightTheme } from "./styles/theme";
 import Navbar from "./components/Navbar";
 import Homepage from "./pages/Homepage";
-import Restaurant from "./pages/Restaurant";
+import Restaurant from "./pages/Cuisines";
 import Search from "./pages/Home";
 import SignPage from "./pages/signup/SignupPage";
 import LoginForm from "./pages/signup/SignupForm";

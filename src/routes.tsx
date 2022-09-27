@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/signup/SignupPage";
-import Homepage from "./pages/Homepage";
-import Restaurant from "./pages/Restaurant";
+import Cuisines from "./pages/Cuisines";
 import LoginPage from "./pages/login/LoginPage";
-import Meal from "./pages/Meal";
+import Home from "./pages/Home";
 import Recipe from "./pages/recipes/Recipe";
-import { Instructions } from "./pages/Meal";
-import { Ingredients } from "./pages/Meal";
+// import { Instructions } from "./pages/Meal";
+// import { Ingredients } from "./pages/Meal";
+import Meal from "./pages/Meal";
+import AllCuisines from "./pages/AllCuisines";
+import SearchResults from "./pages/SearchResults";
 
 const routes = [
   {
@@ -19,11 +21,11 @@ const routes = [
   },
   {
     path: "/home",
-    component: <Homepage />,
+    component: <Home />,
   },
   {
-    path: "/restaurant",
-    component: <Restaurant />,
+    path: `/cuisines`,
+    component: <Cuisines />,
   },
   {
     path: "/recipe",
@@ -34,13 +36,21 @@ const routes = [
     component: <Meal />,
   },
   {
-    path: `/recipe/:id/instructions`,
-    component: <Instructions />,
+    path: `/cuisines/:cuisine`,
+    component: <AllCuisines />,
   },
   {
-    path: `/recipe/:id/ingredients`,
-    component: <Ingredients />,
+    path: `/search/:query`,
+    component: <SearchResults />,
   },
+  // {
+  //   path: `/recipe/:id/instructions`,
+  //   component: <Instructions />,
+  // },
+  // {
+  //   path: `/recipe/:id/ingredients`,
+  //   component: <Ingredients />,
+  // },
 ];
 const MainRoutes = () => {
   return (
