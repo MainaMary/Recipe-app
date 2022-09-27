@@ -8,6 +8,11 @@ import { useQuery } from "react-query";
 interface Props {
   cuisine?: string;
 }
+interface IProps {
+  label: string;
+  link: string;
+  icon: IconType;
+}
 const Cuisines = ({ cuisine }: Props) => {
   const cuisinesType = [
     {
@@ -26,11 +31,7 @@ const Cuisines = ({ cuisine }: Props) => {
       icon: <FaJava />,
     },
   ];
-  interface Props {
-    label: string;
-    link: string;
-    icon: IconType;
-  }
+
   return (
     <>
       <CuisineWrap>

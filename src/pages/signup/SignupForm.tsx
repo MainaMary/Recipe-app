@@ -130,7 +130,7 @@ const SignupForm = () => {
         />
       </Box>
       <Password>
-        <Box>
+        <PasswordWrap>
           <CustomLabel>Password</CustomLabel>
           <CustomInput
             value={password}
@@ -138,26 +138,26 @@ const SignupForm = () => {
             onChange={handleChange}
             required
           />
-        </Box>
-        <Box>
+        </PasswordWrap>
+        <PasswordWrap>
           <CustomLabel>Confirm Password</CustomLabel>
           <CustomInput
             value={confirmPswd}
             name="confirmPswd"
             onChange={handleChange}
           />
-        </Box>
+        </PasswordWrap>
       </Password>
       <Terms>
         <input type="checkbox" />
-        <p>
+        <p style={{ width: "95%" }}>
           By creating an account, you agree to the terms of service conditions
           and privacy policy
         </p>
       </Terms>
-      <div>
-        <button disabled={loading}>Sign up</button>
-      </div>
+      <Box>
+        <Button disabled={loading}>Sign up</Button>
+      </Box>
     </FormWrapper>
   );
 };
@@ -173,12 +173,16 @@ const FormWrapper = styled.form`
 `;
 const Box = styled.div`
   width: 100%;
+  margin: 12px 0;
 `;
-const Account = styled.div``;
-const Input = styled.div``;
+const PasswordWrap = styled.div`
+  width: 45%;
+`;
 const Terms = styled.div`
   display: flex;
-
+  margin: 12px 0;
+  width: 100%;
+  justify-content: space-between;
   p: {
     margin-top: 5px;
   }
@@ -186,7 +190,18 @@ const Terms = styled.div`
 const Password = styled.div`
   display: flex;
   width: 100%;
+  justify-content: space-between;
   @media (max-width: 800px) {
     flex-direction: column;
   }
+`;
+const Account = styled.div``;
+const Button = styled.button`
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background-color: #2a45cd;
+  border: none;
+  outline: none;
+  font-size: 16px;
 `;

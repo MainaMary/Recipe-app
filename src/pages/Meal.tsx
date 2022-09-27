@@ -3,32 +3,43 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-//import { TbArrowNarrowRight } from "react-icons/tb";
+import NoResults from "./NoResults";
 
 interface IProps {
   instructions?: any;
+  title?: string;
 }
 interface IngredientsProps {
   ingredients?: any;
 }
 
 export const Instructions = (props: IProps) => {
-  const { instructions } = props;
-  const instructionsArr = instructions[0].steps;
+  const { instructions, title } = props;
+  const instructionsArr = instructions[0]?.steps;
   return (
-    <ul
-      style={{
-        width: "50%",
-        margin: "auto",
-        textAlign: "start",
-      }}
-    >
-      {instructionsArr.map((item: any) => (
-        <li style={{ color: "#B5B5B5", margin: "10px 0" }} key={item.number}>
-          {item.step}
-        </li>
-      ))}
-    </ul>
+    <>
+      <Prep>{`How to prepare ${title}`}</Prep>
+      <ul
+        style={{
+          width: "50%",
+          margin: "auto",
+          textAlign: "start",
+        }}
+      >
+        {instructions.length ? (
+          instructionsArr?.map((item: any) => (
+            <li
+              style={{ color: "#737373", margin: "10px 0", fontSize: "18px" }}
+              key={item.number}
+            >
+              {item.step}
+            </li>
+          ))
+        ) : (
+          <NoResults message="No instructions found!!" />
+        )}
+      </ul>
+    </>
   );
 };
 export const Ingredients = (props: IngredientsProps) => {
@@ -42,7 +53,10 @@ export const Ingredients = (props: IngredientsProps) => {
       }}
     >
       {ingredients.map((item: any) => (
-        <li style={{ color: "#B5B5B5", margin: "10px 0" }} key={item.id}>
+        <li
+          style={{ color: "#737373", margin: "10px 0", fontSize: "18px" }}
+          key={item.id}
+        >
           {item.name} - {item.unit}
         </li>
       ))}
@@ -69,7 +83,7 @@ const Meal = () => {
       {isSuccess ? (
         <Wrapper>
           <>
-            <h2>{data?.data?.title}</h2>
+            <Title>{data?.data?.title}</Title>
             <Type>
               Dish type:
               <span>
@@ -86,26 +100,35 @@ const Meal = () => {
               </span>
             </Type>
 
-            <img src={data?.data?.image} alt={id} />
+            <img
+              style={{ borderRadius: "20px" }}
+              src={data?.data?.image}
+              alt={id}
+            />
           </>
-          <div>
+          <div
+            style={{ margin: "auto", padding: "20px 0", marginBottom: "20px" }}
+          >
             <Tab>
-              <div
-                className={toggle === 1 ? "tab-active" : "tab"}
+              <Title
+                className={toggle === 1 ? "active" : ""}
                 onClick={() => handleToggle(1)}
               >
                 Instructions
-              </div>
-              <div
-                className={toggle === 2 ? "tab-active" : "tab"}
+              </Title>
+              <Title
+                className={toggle === 2 ? "active" : ""}
                 onClick={() => handleToggle(2)}
               >
                 Ingredients
-              </div>
+              </Title>
             </Tab>
-            <h2>{`How to prepare ${data?.data?.title}`}</h2>
+
             {toggle === 1 ? (
-              <Instructions instructions={data?.data?.analyzedInstructions} />
+              <Instructions
+                instructions={data?.data?.analyzedInstructions}
+                title={data?.data?.title}
+              />
             ) : null}
 
             {toggle === 2 ? (
@@ -121,29 +144,45 @@ const Meal = () => {
 };
 
 export default Meal;
+const Title = styled.p`
+  font-weight: 500;
+  font-size: 24px;
+  border-bottom: 3px solid #000;
+  &.active {
+    color: orange;
+    border-bottom: 3px solid orange;
+  }
+`;
 const Wrapper = styled.div`
   width: 100%;
   padding: 20px 30px;
   text-align: center;
   backgroundcolor: blue;
 `;
+const Prep = styled.p`
+  font-weight: 300;
+  font-size: 24px;
+  margin: 20px 0;
+`;
 const Span = styled.span`
   margin: 0 5px;
-  color: orange;
+  color: rgb(255, 157, 0);
 `;
 const Type = styled.p`
   margin: 10px 0;
 `;
 const Tab = styled.h2`
   display: flex;
-  justifycontent: center;
+  justify-content: space-around;
   margin: auto;
+  width: 40%;
 `;
 const Box = styled.ul`
 width: "50%",
 margin: "auto",
 textAlign: "start",`;
 const List = styled.li`
-color: "#B5B5B5", 
-margin: "10px 0"
+color: #737373, 
+margin: 10px 0, 
+font-size: 18px
 `;

@@ -35,7 +35,6 @@ const NavWrapper = styled.nav`
   height: 10vh;
   z-index: 2;
   background-color: #2a45cd;
-  //  margin-top: -80px;
   display: flex;
   justify-content: space-between;
   padding: 0 20px;

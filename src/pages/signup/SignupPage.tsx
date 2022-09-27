@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SignupForm from "./SignupForm";
 
-const Img = require("../../assets/images/login-image.png");
+const Img = require("../../assets/images/harmburger.png");
 
 const SignupPage = () => {
   return (
@@ -35,10 +35,12 @@ const Main = styled.div`
 const Image = styled.div`
   width: 100%;
   text-align: center;
+  height: 300px;
 
   img {
     margin: auto;
     text-align: center;
+    height: 100%;
   }
   @media (max-width: 768px) {
     display: none;
