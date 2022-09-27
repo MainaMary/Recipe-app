@@ -28,9 +28,14 @@ const Wrapper = styled.div`
 `;
 const Main = styled.div`
   display: flex;
-  width: 70%;
+  width: 100%;
+  max-width: 1000px;
   border-radius: 5px;
   box-shadow: 0 0 3px;
+  @media (max-width: 800px) {
+    width: "70%";
+    max-width: 600px;
+  }
 `;
 const Image = styled.div`
   width: 100%;
