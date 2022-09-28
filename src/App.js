@@ -22,8 +22,6 @@ function App() {
 
         <Router>
           <AuthProvider>
-            <Navbar />
-
             <MainRoutes />
           </AuthProvider>
         </Router>

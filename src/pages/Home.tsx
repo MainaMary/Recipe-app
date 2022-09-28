@@ -4,6 +4,8 @@ import axios from "axios";
 import styled from "styled-components";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
+import CustomLoader from "../components/CustomLoader";
+import { Loader } from "../styles/styled";
 
 const Home = () => {
   let navigate = useNavigate();
@@ -26,24 +28,28 @@ const Home = () => {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <div
+          style={{
+            display: "flex",
+            marginTop: "30px",
+            justifyContent: "center",
+          }}
+        >
+          <CustomLoader />
+        </div>
       ) : (
         <Wrapper>
-          {isSuccess &&
-            data?.data?.recipes.map((recipe: any, index: number) => (
-              <Box key={index}>
-                <Title>{recipe.title}</Title>
-                {isLoading ? (
-                  <p>Loader..</p>
-                ) : (
-                  <LazyLoadImage
-                    src={recipe.image}
-                    alt={recipe.title}
-                    onClick={() => handleImage(recipe.id)}
-                  />
-                )}
-              </Box>
-            ))}
+          <Popular>Popular picks</Popular>
+          {isSuccess && (
+            <Grid>
+              {data?.data?.recipes.map((recipe: any, index: number) => (
+                <Box key={index} onClick={() => handleImage(recipe.id)}>
+                  <Title>{recipe.title}</Title>
+                  <LazyLoadImage src={recipe.image} alt={recipe.title} />
+                </Box>
+              ))}
+            </Grid>
+          )}
         </Wrapper>
       )}
     </>
@@ -52,14 +58,22 @@ const Home = () => {
 
 export default Home;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div``;
+const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   grid-gap: 3rem;
 `;
 const Title = styled.h2`
-  font-size: 12px;
+  font-size: 18px;
   margin-bottom: 12px;
+  font-weight: 500;
+`;
+const Popular = styled.h2`
+  text-align: center;
+  font-size: 24px;
+  margin: 0 auto 12px auto;
+  font-weight: 500;
 `;
 const Box = styled.div`
   height: 300px;

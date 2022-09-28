@@ -7,13 +7,9 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebaseApp";
 import { useState } from "react";
-interface UserData {
-  email: string;
-  password: string;
-}
 interface Props {
   currentUser: User | null;
-  signUp: (auth: Auth, email: string, password: string) => void;
+  signUp: (auth: Auth, email: string, password: string) => Promise<any>;
 }
 
 interface Iprops {
@@ -21,10 +17,11 @@ interface Iprops {
 }
 export const UserContext = createContext<Props>({
   currentUser: null,
-  signUp: () => {},
+  signUp: async () => Promise,
 });
 const AuthProvider = ({ children }: Iprops) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+
   const signUp = (auth: Auth, email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -32,7 +29,7 @@ const AuthProvider = ({ children }: Iprops) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       return setCurrentUser(user);
     });
-    //unsubscribe from the funnction when the component is unmounted
+    //unsubscribe from the function when the component is unmounted
     return unsubscribe;
   }, []);
   const value: Props = {

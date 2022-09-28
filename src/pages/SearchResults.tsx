@@ -3,6 +3,9 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Navbar from "../components/Navbar";
+import CustomLoader from "../components/CustomLoader";
+import { Loader } from "../styles/styled";
 
 const SearchResults = () => {
   const { query } = useParams();
@@ -19,8 +22,17 @@ const SearchResults = () => {
   };
   return (
     <>
+      <Navbar />
       {isLoading ? (
-        "loading..."
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "30px",
+          }}
+        >
+          <CustomLoader />
+        </div>
       ) : (
         <>
           <h3
@@ -49,7 +61,7 @@ const Grid = styled.div`
 const Box = styled.div`
   padding: 10px 20px;
   height: 300px;
-  width: 400px;A
+  width: 400px;
   margin: 12px auto;
   border-radius: 10px;
   overflow: hidden;

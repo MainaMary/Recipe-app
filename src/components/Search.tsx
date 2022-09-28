@@ -24,7 +24,7 @@ const Search = () => {
         placeholder={"Search..."}
       />
       <Button>
-        <FaSearch />
+        <FaSearch style={{ color: "#737373", fontSize: "14px" }} />
       </Button>
     </Wrapper>
   );
@@ -33,11 +33,12 @@ const Search = () => {
 export default Search;
 const Input = styled.input`
   width: 50%;
-  padding: 10px 16px;
+  padding: 12px 16px;
   outline: none;
   border-top-left-radius: 5px;
-
+  background-color: #fff;
   border-bottom-left-radius: 5px;
+  font-size: 16px;
 `;
 const Wrapper = styled.form`
   padding: 30px 20px;
