@@ -1,3 +1,7 @@
+# A food recipe web application implemented using React JS and spoonacular API
+
+A user can search for a recipe by name or cuisine category.When a recipe is clicked the user is redirected to a single Meal page with detailed information.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
