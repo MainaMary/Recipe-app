@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import Cuisines from "./Cuisines";
+import CustomLoader from "../components/CustomLoader";
 
 interface Props {
   cuisine?: string;
@@ -36,12 +37,24 @@ const AllCuisines = () => {
     <>
       <Cuisines cuisine={cuisine} />
       <Grid>
-        {data?.data?.results.map((item: IProps) => (
-          <Box key={item.id} onClick={() => handleMeal(item.id)}>
-            <img alt={item.title} src={item.image} />
-            <h3>{item.title}</h3>
-          </Box>
-        ))}
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "30px",
+            }}
+          >
+            <CustomLoader />
+          </div>
+        ) : (
+          data?.data?.results.map((item: IProps) => (
+            <Box key={item.id} onClick={() => handleMeal(item.id)}>
+              <img alt={item.title} src={item.image} />
+              <h3>{item.title}</h3>
+            </Box>
+          ))
+        )}
       </Grid>
     </>
   );

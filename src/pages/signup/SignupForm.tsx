@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import CustomLabel from "../../components/CustomLabel";
 import { Authcontext } from "../../context/Authcontext";
@@ -20,7 +19,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
   // const { signUp, currentUser } = useContext(Authcontext);
   const { currentUser, signUp } = useContext(UserContext);
-  console.log({ currentUser });
+  console.log({ currentUser, signUp });
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -64,25 +63,19 @@ const SignupForm = () => {
       setConfirmPswdErr("Passwords do not match");
     }
   };
-  // const handleFormSubmit = async (event: any) => {
-  //   event.preventDefault();
-  //   handleValidation();
-  //   try {
-  //     setError("");
-  //     signUp(auth, email, password);
-  //   } catch {
-  //     setError("Failed to create an account. Please try again");
-  //   }
-  //   setLoading(false);
-  // };
+
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     handleValidation();
+
     try {
       console.log(email, password);
-      signUp(auth, email, password);
+      const res = await signUp(auth, email, password);
+      console.log(res.user, "res");
+
       setLoading(true);
       setError("");
+      navigate("/recipe");
     } catch {
       setError("Account creation failed");
     }
@@ -211,4 +204,5 @@ const Button = styled.button`
   outline: none;
   font-size: 16px;
   border-radius: 5px;
+  cursor: pointer;
 `;

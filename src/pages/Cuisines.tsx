@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { FaJava } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import { useQuery } from "react-query";
+import Navbar from "../components/Navbar";
 interface Props {
   cuisine?: string;
 }
@@ -34,6 +33,7 @@ const Cuisines = ({ cuisine }: Props) => {
 
   return (
     <>
+      <Navbar />
       <CuisineWrap>
         {cuisinesType.map((item: any) => (
           <Container>

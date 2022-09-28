@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaTimes, FaBars } from "react-icons/fa";
 import { Menu } from "./MenuItems";
-const Navbar = () => {
+
+interface Props {
+  show?: boolean;
+}
+const Navbar = ({ show = true }: Props) => {
   const [click, setClick] = useState(false);
 
   const handleClick = () => {
@@ -14,17 +18,22 @@ const Navbar = () => {
   return (
     <NavWrapper>
       <NavLogo to="/">FoodRecipe</NavLogo>
-      <ListWrap>
-        {Menu.map(({ id, title, url, className }) => {
-          console.log(title);
-          return (
-            <Items key={id} className={className}>
-              <a href={url}>{title}</a>
-            </Items>
-          );
-        })}
-      </ListWrap>
-      <MobileIcon onClick={handleClick}>{click ? FaTimes : FaBars}</MobileIcon>
+      {show && (
+        <ListWrap>
+          {Menu.map(({ id, title, url, className }) => {
+            console.log(title);
+            return (
+              <Items key={id} className={className}>
+                <a href={url}>{title}</a>
+              </Items>
+            );
+          })}
+        </ListWrap>
+      )}
+
+      <MobileIcon onClick={handleClick}>
+        {click ? <FaTimes /> : <FaBars />}
+      </MobileIcon>
     </NavWrapper>
   );
 };

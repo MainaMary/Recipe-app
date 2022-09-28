@@ -4,6 +4,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import NoResults from "./NoResults";
+import CustomLoader from "../components/CustomLoader";
+import Navbar from "../components/Navbar";
 
 interface IProps {
   instructions?: any;
@@ -80,6 +82,7 @@ const Meal = () => {
 
   return (
     <div>
+      <Navbar />
       {isSuccess ? (
         <Wrapper>
           <>
@@ -137,7 +140,15 @@ const Meal = () => {
           </div>
         </Wrapper>
       ) : (
-        <p>Loading...</p>
+        <div
+          style={{
+            display: "flex",
+            marginTop: "30px",
+            justifyContent: "center",
+          }}
+        >
+          <CustomLoader />
+        </div>
       )}
     </div>
   );

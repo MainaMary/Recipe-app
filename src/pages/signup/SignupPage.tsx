@@ -1,21 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import SignupForm from "./SignupForm";
+import Navbar from "../../components/Navbar";
 
 const Img = require("../../assets/images/harmburger.png");
 
 const SignupPage = () => {
   return (
-    <Wrapper>
-      <Main>
-        <Image>
-          <img alt="login" src={Img} />
-        </Image>
-        <LogIn>
-          <SignupForm />
-        </LogIn>
-      </Main>
-    </Wrapper>
+    <>
+      <Navbar show={false} />
+      <Wrapper>
+        <Main>
+          <Image>
+            <img alt="login" src={Img} />
+          </Image>
+          <LogIn>
+            <SignupForm />
+          </LogIn>
+        </Main>
+      </Wrapper>
+    </>
   );
 };
 
@@ -28,7 +32,7 @@ const Wrapper = styled.div`
 `;
 const Main = styled.div`
   display: flex;
-  width: 100%;
+  width: 70%;
   max-width: 1000px;
   border-radius: 5px;
   box-shadow: 0 0 3px;
