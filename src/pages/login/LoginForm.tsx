@@ -4,6 +4,8 @@ import CustomLabel from "../../components/CustomLabel";
 import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader";
 import styled from "styled-components";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebaseApp";
 
 const LoginForm = () => {
   const [formValues, setFormValues] = useState({
@@ -21,10 +23,32 @@ const LoginForm = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+  const navigate = useNavigate();
+  const hasValue = (obj: any) => {
+    for (const i in obj) {
+      if (obj[i]) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const handleValidation = () => {
+    const errorExists = {
+      email: false,
+      password: false,
+    };
+  };
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        formValues.email,
+        formValues.password
+      );
+    } catch {}
   };
-  const navigate = useNavigate();
+
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
       <div>{error}</div>

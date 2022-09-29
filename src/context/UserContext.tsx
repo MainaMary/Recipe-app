@@ -9,7 +9,7 @@ import { auth } from "../firebaseApp";
 import { useState } from "react";
 interface Props {
   currentUser: User | null;
-  signUp: (auth: Auth, email: string, password: string) => Promise<any>;
+  // signUp: (auth: Auth, email: string, password: string) => Promise<any>;
 }
 
 interface Iprops {
@@ -17,25 +17,26 @@ interface Iprops {
 }
 export const UserContext = createContext<Props>({
   currentUser: null,
-  signUp: async () => Promise,
 });
 const AuthProvider = ({ children }: Iprops) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  const signUp = (auth: Auth, email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user, "user in effect");
+
       return setCurrentUser(user);
     });
     //unsubscribe from the function when the component is unmounted
+    console.log(currentUser, "user after unsubscribe");
+
     return unsubscribe;
   }, []);
   const value: Props = {
     currentUser,
-    signUp,
   };
+  console.log(currentUser, "user in provider");
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 export default AuthProvider;

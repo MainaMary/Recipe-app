@@ -2,24 +2,16 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import CustomInput from "../../components/CustomInput";
 import CustomLabel from "../../components/CustomLabel";
-import { Authcontext } from "../../context/Authcontext";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-const months = {
-  january: 30,
-  february: 45,
-  march: 67,
-};
-for (const [key, value] of Object.entries(months)) {
-  console.log(`${key}`, `${value * 45}`);
-}
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { updateProfile, updateCurrentUser } from "firebase/auth";
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  // const { signUp, currentUser } = useContext(Authcontext);
-  const { currentUser, signUp } = useContext(UserContext);
-  console.log({ currentUser, signUp });
+  const { currentUser } = useContext(UserContext);
+  console.log({ currentUser });
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -36,6 +28,18 @@ const SignupForm = () => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    if (username) {
+      setUserNameErr("");
+    }
+    if (email) {
+      setEmailErr("");
+    }
+    if (password) {
+      setPasswordErr("");
+    }
+    if (confirmPswd) {
+      setConfirmPswdErr("");
+    }
   };
   const validateEmail = (email: string) => {
     return String(email)
@@ -53,14 +57,18 @@ const SignupForm = () => {
     } else if (!validateEmail(email)) {
       setEmailErr("Valid email adress is required");
     }
+
     if (!password) {
       setPasswordErr("Password is required");
     }
     if (!confirmPswd) {
       setConfirmPswdErr("Confirm password is required");
     }
-    if (password && password !== confirmPswd) {
+    if (password && confirmPswd && password !== confirmPswd) {
       setConfirmPswdErr("Passwords do not match");
+    }
+    if (password.length < 6) {
+      setPasswordErr("Password should be atleast 6 characters");
     }
   };
 
@@ -70,26 +78,29 @@ const SignupForm = () => {
 
     try {
       console.log(email, password);
-      const res = await signUp(auth, email, password);
-      console.log(res.user, "res");
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      // const userDetails = updateCurrentUser(auth, {
+      //   displayName: formValues.username,
+      // });
+      // console.log(res.user, "res");
 
       setLoading(true);
       setError("");
-      navigate("/recipe");
+      // navigate("/recipe");
     } catch {
       setError("Account creation failed");
     }
     setLoading(false);
   };
 
-  console.log(userNameErr, passwordErr, emailErr, confirmPswdErr);
+  console.log(error, "error");
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
       <div>{error}</div>
       <div>
         <h2>Create an account</h2>
       </div>
-      <h2>{currentUser?.email}</h2>
+      {/* <h2>{currentUser?.email}</h2> */}
 
       <Box>
         <CustomLabel>Username</CustomLabel>
