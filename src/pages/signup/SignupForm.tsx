@@ -18,17 +18,19 @@ const SignupForm = () => {
     password: "",
     confirmPswd: "",
   });
+  const [check, setCheck] = useState(false);
   const [userNameErr, setUserNameErr] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [confirmPswdErr, setConfirmPswdErr] = useState("");
+  const [checkErr, setCheckErr] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { username, email, password, confirmPswd } = formValues;
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    if (username) {
+    if (username.length) {
       setUserNameErr("");
     }
     if (email) {
@@ -40,6 +42,12 @@ const SignupForm = () => {
     if (confirmPswd) {
       setConfirmPswdErr("");
     }
+    if (check) {
+      setCheckErr("");
+    }
+  };
+  const handleCheck = (e: any) => {
+    setCheck((prev) => !prev);
   };
   const validateEmail = (email: string) => {
     return String(email)
@@ -67,9 +75,13 @@ const SignupForm = () => {
     if (password && confirmPswd && password !== confirmPswd) {
       setConfirmPswdErr("Passwords do not match");
     }
-    if (password.length < 6) {
+    if (password && password.length < 6) {
       setPasswordErr("Password should be atleast 6 characters");
     }
+    if (!check) {
+      setCheckErr("Please confirm terms and policy");
+    }
+    setError("");
   };
 
   const handleFormSubmit = async (e: any) => {
@@ -78,7 +90,11 @@ const SignupForm = () => {
 
     try {
       console.log(email, password);
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      if (check && confirmPswd && password && email) {
+        await createUserWithEmailAndPassword(auth, email, password);
+        navigate("/login");
+      }
+
       // const userDetails = updateCurrentUser(auth, {
       //   displayName: formValues.username,
       // });
@@ -86,17 +102,24 @@ const SignupForm = () => {
 
       setLoading(true);
       setError("");
-      // navigate("/recipe");
-    } catch {
-      setError("Account creation failed");
+    } catch (error: any) {
+      console.log(error.message);
+      if (error.message) {
+        setEmailErr("Email already exists");
+      }
+      setTimeout(() => {
+        setError("Account creation failed");
+      }, 1000);
     }
     setLoading(false);
   };
 
-  console.log(error, "error");
+  console.log(check, "checked");
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
-      <div>{error}</div>
+      <div style={{ fontSize: "16px", color: "red", margin: "5px 0" }}>
+        {error}
+      </div>
       <div>
         <h2>Create an account</h2>
       </div>
@@ -140,8 +163,8 @@ const SignupForm = () => {
           </div>
         </PasswordWrap>
       </Password>
-      <Terms>
-        <input type="checkbox" />
+      <Terms onChange={handleCheck}>
+        <input type="checkbox" checked={check} />
         <p style={{ width: "95%" }}>
           By creating an account, you agree to the terms of service conditions
           and privacy policy
