@@ -40,13 +40,29 @@ const LoginForm = () => {
   };
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
+    handleValidation();
     try {
       const response = await signInWithEmailAndPassword(
         auth,
         formValues.email,
         formValues.password
       );
-    } catch {}
+      if (response.user) {
+        navigate("/recipe");
+      }
+
+      console.log(response.user);
+    } catch (error: any) {
+      console.log(error.message.Firebase);
+      if (error.message.includes("Firebase: Error (auth/wrong-password)")) {
+        setPasswordErr("Wrong password");
+      } else if (
+        error.message.includes("Firebase: Error (auth/user-not-found)")
+      ) {
+        setEmailErr("Wrong email");
+      }
+      setError("Failed to login");
+    }
   };
 
   return (
@@ -77,17 +93,6 @@ const LoginForm = () => {
           />
           <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
             {passwordErr ? passwordErr : ""}
-          </div>
-        </PasswordWrap>
-        <PasswordWrap>
-          <CustomLabel>Confirm Password</CustomLabel>
-          <CustomInput
-            value={formValues.confirmPswd}
-            name="confirmPswd"
-            onChange={handleChange}
-          />
-          <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
-            {confirmPswdErr ? confirmPswdErr : ""}
           </div>
         </PasswordWrap>
       </Password>
@@ -129,7 +134,7 @@ const Box = styled.div`
   margin: 12px 0;
 `;
 const PasswordWrap = styled.div`
-  width: 45%;
+  width: 100%;
   @media (max-width: 800px) {
     width: 100%;
   }

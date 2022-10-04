@@ -114,7 +114,6 @@ const SignupForm = () => {
     setLoading(false);
   };
 
-  console.log(check, "checked");
   return (
     <FormWrapper onSubmit={handleFormSubmit}>
       <div style={{ fontSize: "16px", color: "red", margin: "5px 0" }}>

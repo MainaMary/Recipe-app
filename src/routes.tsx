@@ -9,6 +9,7 @@ import Recipe from "./pages/recipes/Recipe";
 import Meal from "./pages/Meal";
 import AllCuisines from "./pages/AllCuisines";
 import SearchResults from "./pages/SearchResults";
+import Italian from "./pages/Italian";
 
 const routes = [
   {
@@ -23,10 +24,7 @@ const routes = [
     path: "/home",
     component: <Home />,
   },
-  {
-    path: `/cuisines`,
-    component: <Cuisines />,
-  },
+
   {
     path: "/recipe",
     component: <Recipe />,
@@ -36,6 +34,10 @@ const routes = [
     component: <Meal />,
   },
   {
+    path: "/cuisines",
+    component: <Cuisines />,
+  },
+  {
     path: `/cuisines/:cuisine`,
     component: <AllCuisines />,
   },
@@ -43,14 +45,6 @@ const routes = [
     path: `/search/:query`,
     component: <SearchResults />,
   },
-  // {
-  //   path: `/recipe/:id/instructions`,
-  //   component: <Instructions />,
-  // },
-  // {
-  //   path: `/recipe/:id/ingredients`,
-  //   component: <Ingredients />,
-  // },
 ];
 const MainRoutes = () => {
   return (

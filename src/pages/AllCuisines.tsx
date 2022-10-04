@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,6 +16,7 @@ interface IProps {
   imageType: string;
 }
 const AllCuisines = () => {
+  const [italian, setItalian] = useState([]);
   const navigate = useNavigate();
   const { cuisine } = useParams();
   const handleMeal = (id: string) => {
@@ -31,31 +32,42 @@ const AllCuisines = () => {
     ["get cuisines", cuisine],
     fetchCuisines
   );
-  console.log(data?.data?.results, "data");
-
+  const fetchItalian = async () => {
+    const res = await axios(
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=italian`
+    );
+    const data = res.data;
+    setItalian(data.results);
+  };
+  useEffect(() => {
+    fetchItalian();
+  }, []);
+  console.log(italian, "italian");
   return (
     <>
       <Cuisines cuisine={cuisine} />
-      <Grid>
-        {isLoading ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "30px",
-            }}
-          >
-            <CustomLoader />
-          </div>
-        ) : (
-          data?.data?.results.map((item: IProps) => (
-            <Box key={item.id} onClick={() => handleMeal(item.id)}>
-              <img alt={item.title} src={item.image} />
-              <h3>{item.title}</h3>
-            </Box>
-          ))
-        )}
-      </Grid>
+      {
+        <Grid>
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "30px",
+              }}
+            >
+              <CustomLoader />
+            </div>
+          ) : (
+            data?.data?.results.map((item: IProps) => (
+              <Box key={item.id} onClick={() => handleMeal(item.id)}>
+                <img alt={item.title} src={item.image} />
+                <h3>{item.title}</h3>
+              </Box>
+            ))
+          )}
+        </Grid>
+      }
     </>
   );
 };

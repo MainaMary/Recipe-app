@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { FaJava } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
@@ -13,6 +14,18 @@ interface IProps {
   icon: IconType;
 }
 const Cuisines = ({ cuisine }: Props) => {
+  const [italian, setItalian] = useState([]);
+
+  const fetchItalian = async () => {
+    const res = await axios(
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=italian`
+    );
+    const data = res.data;
+    setItalian(data.results);
+  };
+  useEffect(() => {
+    fetchItalian();
+  }, [italian]);
   const cuisinesType = [
     {
       label: "Italian",
@@ -44,11 +57,24 @@ const Cuisines = ({ cuisine }: Props) => {
           </Container>
         ))}
       </CuisineWrap>
+      <Grid>
+        {italian.map((item: any) => (
+          <Box key={item.id}>
+            <img alt={item.title} src={item.image} />
+            <h3>{item.title}</h3>
+          </Box>
+        ))}
+      </Grid>
     </>
   );
 };
 
 export default Cuisines;
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 3rem;
+`;
 const CuisineWrap = styled.div`
   padding: 20px;
   display: flex;
