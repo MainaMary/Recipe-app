@@ -78,12 +78,15 @@ const Cuisines = ({ cuisine }: Props) => {
   return (
     <>
       <Navbar />
+      <Main></Main>
       <CuisineWrap>
         {cuisinesType.map((item: any) => (
-          <Path to={item.link}>
-            <FaJava />
-            <h4>{item.label}</h4>
-          </Path>
+          <div>
+            <Path to={item.link}>
+              <FaJava />
+              <h4>{item.label}</h4>
+            </Path>
+          </div>
         ))}
         <Container>
           <Button onClick={handleModal}>Get meal plan</Button>
@@ -115,8 +118,10 @@ const CuisineWrap = styled.div`
   width: 100%;
   height: 64px;
   align-items: center;
+  @media screen and (max-width: 768px) {
+  }
 `;
-
+const Main = styled.div``;
 const Button = styled.button`
   text-align: center;
   background-color: #2a45cd;
@@ -132,6 +137,9 @@ const Container = styled.div`
   width: 40%;
   text-align: right;
   padding: 0px 32px;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
 `;
 const Path = styled(NavLink)`
   text-decoration: none;
@@ -141,6 +149,10 @@ const Path = styled(NavLink)`
   justify-content: center;
   &.active {
     color: orange;
+  }
+  ,
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 const Box = styled.div`

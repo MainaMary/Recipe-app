@@ -33,16 +33,18 @@ const Modal = (prop: Prop) => {
   const handleSelect = (e: any) => {
     setDiet(e.target.value);
   };
+  const fetchDiet = async () => {
+    const response = await axios(
+      `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}&timeFrame=day&diet=${diet}`
+    );
+    return response;
+  };
+  const { data, isLoading } = useQuery(["fetch-diet", diet], fetchDiet);
+  console.log(data?.data?.meals, "data diet");
+  console.log(data?.data?.nutrients, "data diet");
   if (!openModal) {
     return null;
   }
-  console.log(diet, "diet");
-  const fetchDiet = async () => {
-    return await axios(
-      `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}&timeFrame=day&diet=${diet}`
-    );
-  };
-  const { data, isLoading } = useQuery(["fetch-diet"], fetchDiet);
 
   return (
     <Main onClick={handleModal}>

@@ -42,7 +42,7 @@ const AllCuisines = () => {
   useEffect(() => {
     fetchItalian();
   }, []);
-  console.log(italian, "italian");
+
   return (
     <>
       <Cuisines cuisine={cuisine} />
