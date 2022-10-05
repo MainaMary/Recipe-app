@@ -5,6 +5,7 @@ import { FaJava } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Modal from "../components/Modal";
 interface Props {
   cuisine?: string;
 }
@@ -15,6 +16,10 @@ interface IProps {
 }
 const Cuisines = ({ cuisine }: Props) => {
   const [italian, setItalian] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const handleModal = () => {
+    setOpenModal((item) => !item);
+  };
 
   const fetchItalian = async () => {
     const res = await axios(
@@ -42,6 +47,32 @@ const Cuisines = ({ cuisine }: Props) => {
       link: "/cuisines/american",
       icon: <FaJava />,
     },
+    {
+      label: "German",
+      link: "/cuisines/german",
+      icon: <FaJava />,
+    },
+    {
+      label: "Chinese",
+      link: "/cuisines/chinese",
+      icon: <FaJava />,
+    },
+    {
+      label: "Mexican",
+      link: "/cuisines/mexican",
+      icon: <FaJava />,
+    },
+
+    {
+      label: "British",
+      link: "/cuisines/british",
+      icon: <FaJava />,
+    },
+    {
+      label: "Spanish",
+      link: "/cuisines/spanish",
+      icon: <FaJava />,
+    },
   ];
 
   return (
@@ -49,13 +80,14 @@ const Cuisines = ({ cuisine }: Props) => {
       <Navbar />
       <CuisineWrap>
         {cuisinesType.map((item: any) => (
-          <Container>
-            <Path to={item.link}>
-              <FaJava />
-              <h4>{item.label}</h4>
-            </Path>
-          </Container>
+          <Path to={item.link}>
+            <FaJava />
+            <h4>{item.label}</h4>
+          </Path>
         ))}
+        <Container>
+          <Button onClick={handleModal}>Get meal plan</Button>
+        </Container>
       </CuisineWrap>
       <Grid>
         {italian.map((item: any) => (
@@ -65,6 +97,7 @@ const Cuisines = ({ cuisine }: Props) => {
           </Box>
         ))}
       </Grid>
+      <Modal openModal={openModal} handleModal={handleModal} />
     </>
   );
 };
@@ -78,11 +111,27 @@ const Grid = styled.div`
 const CuisineWrap = styled.div`
   padding: 20px;
   display: flex;
-  justify-content: center;
-  width: 50%;
+  justify-content: space-between;
+  width: 100%;
+  height: 64px;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  text-align: center;
+  background-color: #2a45cd;
+  color: #fff;
+  padding: 8px 20px;
+  width: 30%;
+  outline: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 `;
 const Container = styled.div`
-  display: flex;
+  width: 40%;
+  text-align: right;
+  padding: 0px 32px;
 `;
 const Path = styled(NavLink)`
   text-decoration: none;
