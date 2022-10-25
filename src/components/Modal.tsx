@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import axios from "axios";
+import Diet from "../pages/diet/Diet";
+import { useNavigate } from "react-router-dom";
 
 interface Prop {
   openModal: boolean;
@@ -28,6 +30,7 @@ const dietArr = [
   { id: 5, label: "Pesecatarian", value: "pesectarian" },
 ];
 const Modal = (prop: Prop) => {
+  const navigate = useNavigate();
   const { openModal, handleModal } = prop;
   const [diet, setDiet] = useState("");
   const handleSelect = (e: any) => {
@@ -40,35 +43,45 @@ const Modal = (prop: Prop) => {
     return response;
   };
   const { data, isLoading } = useQuery(["fetch-diet", diet], fetchDiet);
-  console.log(data?.data?.meals, "data diet");
-  console.log(data?.data?.nutrients, "data diet");
+
   if (!openModal) {
     return null;
   }
-
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    navigate("/diet");
+  };
   return (
-    <Main onClick={handleModal}>
-      <Wrapper
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <Close onClick={handleModal}>
-          <h3>Meal plan</h3>
-          <p style={{ cursor: "pointer" }}>X</p>
-        </Close>
-        <Box>
-          <Select value={diet} onChange={handleSelect}>
-            {dietArr.map((item: DietProps) => (
-              <Option key={item.id} value={item.value}>
-                {item.label}
-              </Option>
-            ))}
-          </Select>
-        </Box>
-        Coming soon...!!
-      </Wrapper>
-    </Main>
+    <>
+      <Main onClick={handleModal}>
+        <Wrapper
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          onSubmit={handleSubmit}
+        >
+          <Close onClick={handleModal}>
+            <h3>Meal plan</h3>
+            <p style={{ cursor: "pointer" }}>X</p>
+          </Close>
+          <Box>
+            <Select value={diet} onChange={handleSelect}>
+              {dietArr.map((item: DietProps) => (
+                <Option key={item.id} value={item.value}>
+                  {item.label}
+                </Option>
+              ))}
+            </Select>
+          </Box>
+          <button>submit</button>
+        </Wrapper>
+      </Main>
+      <Diet
+        isLoading={isLoading}
+        diet={data?.data?.meals}
+        nutrients={data?.data?.nutrients}
+      />
+    </>
   );
 };
 
