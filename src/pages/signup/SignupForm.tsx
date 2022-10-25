@@ -48,6 +48,7 @@ const SignupForm = () => {
   };
   const handleCheck = (e: any) => {
     setCheck((prev) => !prev);
+    setCheckErr("");
   };
   const validateEmail = (email: string) => {
     return String(email)
@@ -120,7 +121,7 @@ const SignupForm = () => {
         {error}
       </div>
       <div>
-        <h2>Create an account</h2>
+        <h2 style={{ color: "#2a45cd" }}>Create an account</h2>
       </div>
       {/* <h2>{currentUser?.email}</h2> */}
 
@@ -169,6 +170,9 @@ const SignupForm = () => {
           and privacy policy
         </p>
       </Terms>
+      <div style={{ fontSize: "12px", color: "red", margin: "5px 0" }}>
+        {checkErr ? checkErr : ""}
+      </div>
       <Box>
         <Button disabled={loading}>Sign up</Button>
       </Box>

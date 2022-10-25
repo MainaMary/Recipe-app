@@ -17,11 +17,16 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
-  const [confirmPswdErr, setConfirmPswdErr] = useState("");
+
   const handleChange = (e: any) => {
-    const { email, password, confirmPswd } = formValues;
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    if (email) {
+      setEmailErr("");
+    }
+    if (password) {
+      setPasswordErr("");
+    }
   };
   const navigate = useNavigate();
   const hasValue = (obj: any) => {
@@ -32,11 +37,15 @@ const LoginForm = () => {
     }
     return false;
   };
+  const { email, password } = formValues;
+
   const handleValidation = () => {
-    const errorExists = {
-      email: false,
-      password: false,
-    };
+    if (!email) {
+      setEmailErr("Email is required");
+    }
+    if (!password) {
+      setPasswordErr("Password is required");
+    }
   };
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
@@ -69,7 +78,7 @@ const LoginForm = () => {
     <FormWrapper onSubmit={handleFormSubmit}>
       <div>{error}</div>
       <div>
-        <h2>Log in</h2>
+        <h2 style={{ color: "#2a45cd" }}>Log in</h2>
       </div>
 
       <Box>
