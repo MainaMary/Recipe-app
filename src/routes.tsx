@@ -9,7 +9,7 @@ import Recipe from "./pages/recipes/Recipe";
 import Meal from "./pages/Meal";
 import AllCuisines from "./pages/AllCuisines";
 import SearchResults from "./pages/SearchResults";
-import Italian from "./pages/Italian";
+import Diet from "./pages/diet/Diet";
 
 const routes = [
   {
@@ -44,6 +44,10 @@ const routes = [
   {
     path: `/search/:query`,
     component: <SearchResults />,
+  },
+  {
+    path: `/diet`,
+    component: <Diet />,
   },
 ];
 const MainRoutes = () => {
