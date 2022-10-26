@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins&family=Roboto:wght@300;400;700&display=swap");
+:root {
+  --globalColor: rgba(244, 159, 47, 0.8);
+}
 * {
   margin: 0;
   padding: 0;
@@ -24,7 +27,7 @@
 .loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #2a45cd;
+  border-top: 16px solid rgba(244, 159, 47, 0.8);
   width: 70px;
   height: 70px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
