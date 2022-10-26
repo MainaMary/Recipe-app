@@ -4,12 +4,11 @@ import Cuisines from "./pages/Cuisines";
 import LoginPage from "./pages/login/LoginPage";
 import Home from "./pages/Home";
 import Recipe from "./pages/recipes/Recipe";
-// import { Instructions } from "./pages/Meal";
-// import { Ingredients } from "./pages/Meal";
 import Meal from "./pages/Meal";
 import AllCuisines from "./pages/AllCuisines";
 import SearchResults from "./pages/SearchResults";
 import Diet from "./pages/diet/Diet";
+import UpdateProfile from "./pages/updateProfile/UpdateProfile";
 
 const routes = [
   {
@@ -48,6 +47,10 @@ const routes = [
   {
     path: `/diet`,
     component: <Diet />,
+  },
+  {
+    path: `/updateProfile`,
+    component: <UpdateProfile />,
   },
 ];
 const MainRoutes = () => {
