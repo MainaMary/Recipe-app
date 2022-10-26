@@ -1,40 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaTimes, FaBars } from "react-icons/fa";
-import { Menu } from "./MenuItems";
+import { FaTimes, FaBars, FaUserAlt } from "react-icons/fa";
+import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { Menu } from "./MenuItems";
 
 interface Props {
   show?: boolean;
+  checkBtns?: boolean;
 }
-const Navbar = ({ show = true }: Props) => {
+interface ModalProps {
+  showModal?: boolean;
+  handleModal?: () => void;
+}
+const Modal = (props: ModalProps) => {
+  const { showModal, handleModal } = props;
+  const currentUser = useContext(UserContext);
+  const navigate = useNavigate();
+  if (!showModal) {
+    return null;
+  }
+  return (
+    <Profilewrap>
+      <Form>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "8px 0",
+          }}
+        >
+          <p>Profile</p>
+          <p onClick={handleModal}>X</p>
+        </div>
+
+        <div>
+          Email
+          <p>{currentUser.currentUser?.email}</p>
+        </div>
+        <ProfileBtns>
+          <Btn onClick={() => navigate("/updateProfile")}>Update profile</Btn>
+          <Btn style={{ padding: "4px 8px" }}>Log out</Btn>
+        </ProfileBtns>
+      </Form>
+    </Profilewrap>
+  );
+};
+const Navbar = ({ show = true, checkBtns = false }: Props) => {
   const [click, setClick] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     setClick((prevState) => {
       return !prevState;
     });
   };
+  const handleModal = () => {
+    setShowModal((prev) => !prev);
+  };
   return (
     <NavWrapper>
       <NavLogo to="/">FoodRecipe</NavLogo>
-      <Wrapper>
-        <Button
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Log in
-        </Button>
-        <Button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Sign up
-        </Button>
-      </Wrapper>
+      {checkBtns ? (
+        <Wrapper>
+          <Button
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Log in
+          </Button>
+          <Button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Sign up
+          </Button>
+        </Wrapper>
+      ) : null}
       {show && (
         <>
           <ListWrap>
@@ -46,6 +91,9 @@ const Navbar = ({ show = true }: Props) => {
                 </Items>
               );
             })}
+            <Items className="navBtn" onClick={handleModal}>
+              <FaUserAlt className="navBtn" />
+            </Items>
           </ListWrap>
         </>
       )}
@@ -53,16 +101,43 @@ const Navbar = ({ show = true }: Props) => {
       <MobileIcon onClick={handleClick}>
         {click ? <FaTimes /> : <FaBars />}
       </MobileIcon>
+      {showModal ? (
+        <Modal showModal={showModal} handleModal={handleModal} />
+      ) : null}
     </NavWrapper>
   );
 };
 
 export default Navbar;
 
+const Profilewrap = styled.div`
+  position: relative;
+  top: 80px;
+  right: 36px;
+  box-shadow: 0 0 3px #777;
+  width: 15%;
+`;
+const Form = styled.div`
+  padding: 10px 8px;
+`;
+const Btn = styled.button`
+  padding: 4px 8px;
+  background-color: var(--globalColor);
+  border: none;
+  outline: "none";
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+const ProfileBtns = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+`;
 const NavWrapper = styled.nav`
   height: 10vh;
   z-index: 2;
-  background-color: #2a45cd;
+  background-color: rgba(244, 159, 47, 0.8);
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
@@ -121,7 +196,8 @@ const Button = styled.button`
   outline: focus;
   border: none;
   border-radius: 5px;
-  color: #2a45cd;
+  color: var(--globalColor);
+  font-weight: bold;
   font-size: 16px;
   cursor: pointer;
   background-color: #fff;

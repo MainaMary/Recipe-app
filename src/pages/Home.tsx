@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import styled from "styled-components";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 import CustomLoader from "../components/CustomLoader";
-import { Loader } from "../styles/styled";
-
+import { UserContext } from "../context/UserContext";
+import { signOut } from "firebase/auth";
 const Home = () => {
   let navigate = useNavigate();
+  const userProfile = useContext(UserContext);
+  console.log(userProfile.currentUser?.email, "userprofile");
   const fetchRecipes = async () => {
     const res = await axios.get(
       `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10`
@@ -43,9 +45,14 @@ const Home = () => {
           {isSuccess && (
             <Grid>
               {data?.data?.recipes.map((recipe: any, index: number) => (
-                <Box key={index} onClick={() => handleImage(recipe.id)}>
+                <Box key={index}>
                   <Title>{recipe.title}</Title>
-                  <LazyLoadImage src={recipe.image} alt={recipe.title} />
+                  <Image>
+                    <img src={recipe.image} alt={recipe.title} />
+                    <More onClick={() => handleImage(recipe.id)}>
+                      <p>See more</p>
+                    </More>
+                  </Image>
                 </Box>
               ))}
             </Grid>
@@ -75,9 +82,36 @@ const Popular = styled.h2`
   margin: 0 auto 12px auto;
   font-weight: 500;
 `;
-const Box = styled.div`
+const Image = styled.div`
+  position: relative;
   height: 300px;
   width: 400px;
+  &:hover {
+    // transform: scale(1.1);
+  }
+  img {
+    object-fit: cover;
+    width: 300px;
+    height: 400px;
+  }
+`;
+const More = styled.div`
+  position: absolute;
+  background-color: rgba(216, 207, 197, 0.8);
+  text-align: center;
+  width: 75%;
+  color: #000;
+  font-size: 20px;
+  bottom: -10px;
+  padding: 12px 0;
+  left: 0;
+  cursor: pointer;
+  p {
+    color: rgba(244, 159, 47, 0.8);
+    font-weight: bold;
+  }
+`;
+const Box = styled.div`
   margin: 12px auto;
   border-radius: 10px;
   overflow: hidden;

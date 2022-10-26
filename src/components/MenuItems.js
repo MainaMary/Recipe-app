@@ -17,10 +17,4 @@ export const Menu = [
   //   url: "/signup",
   //   className: "navBtn",
   // },
-  {
-    id: 4,
-    title: "Log out",
-    url: "/logout",
-    className: "navBtn",
-  },
 ];
