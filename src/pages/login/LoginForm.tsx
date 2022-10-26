@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomLabel from "../../components/CustomLabel";
 import CustomInput from "../../components/CustomInput";
-import CustomLoader from "../../components/CustomLoader";
-import styled from "styled-components";
+import {
+  FormWrapper,
+  Box,
+  PasswordWrap,
+  Terms,
+  Password,
+  Button,
+} from "../../styles/styled";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseApp";
 
@@ -78,7 +84,7 @@ const LoginForm = () => {
     <FormWrapper onSubmit={handleFormSubmit}>
       <div>{error}</div>
       <div>
-        <h2 style={{ color: "#2a45cd" }}>Log in</h2>
+        <h2 style={{ color: "var(--globalColor)" }}>Log in</h2>
       </div>
 
       <Box>
@@ -109,71 +115,24 @@ const LoginForm = () => {
       <Box>
         <Button disabled={loading}>Log in</Button>
       </Box>
-      <Account onClick={() => navigate("/")}>
+      <div onClick={() => navigate("/")}>
         <p>
           Need an account?{" "}
           <span
             style={{
-              color: "#2a45cd",
+              color: "var(--globalColor)",
               textDecoration: "underline",
               marginLeft: "5px",
               cursor: "pointer",
+              fontWeight: "bolder",
             }}
           >
             Sign up
           </span>
         </p>
-      </Account>
+      </div>
     </FormWrapper>
   );
 };
 
 export default LoginForm;
-
-const FormWrapper = styled.form`
-  padding: 12px 18px;
-  border-left: 1px solid #000;
-  @media (max-width: 800px) {
-    width: "70%";
-    padding: "12px 10px";
-  }
-`;
-const Box = styled.div`
-  width: 100%;
-  margin: 12px 0;
-`;
-const PasswordWrap = styled.div`
-  width: 100%;
-  @media (max-width: 800px) {
-    width: 100%;
-  }
-`;
-const Terms = styled.div`
-  display: flex;
-  margin: 12px 0;
-  width: 100%;
-  justify-content: space-between;
-  p: {
-    margin-top: 5px;
-  }
-`;
-const Password = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  @media (max-width: 800px) {
-    flex-direction: column;
-  }
-`;
-const Account = styled.div``;
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  color: #fff;
-  background-color: #2a45cd;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-`;

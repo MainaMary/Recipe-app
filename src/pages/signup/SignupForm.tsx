@@ -121,7 +121,7 @@ const SignupForm = () => {
         {error}
       </div>
       <div>
-        <h2 style={{ color: "#2a45cd" }}>Create an account</h2>
+        <h2 style={{ color: "var(--globalColor)" }}>Create an account</h2>
       </div>
       {/* <h2>{currentUser?.email}</h2> */}
 
@@ -163,8 +163,8 @@ const SignupForm = () => {
           </div>
         </PasswordWrap>
       </Password>
-      <Terms onChange={handleCheck}>
-        <input type="checkbox" checked={check} />
+      <Terms>
+        <input type="checkbox" checked={check} onChange={handleCheck} />
         <p style={{ width: "95%" }}>
           By creating an account, you agree to the terms of service conditions
           and privacy policy
@@ -181,7 +181,7 @@ const SignupForm = () => {
           Already have an account?{" "}
           <span
             style={{
-              color: "#2a45cd",
+              color: "var(--globalColor)",
               textDecoration: "underline",
               marginLeft: "5px",
               cursor: "pointer",
@@ -236,7 +236,7 @@ const Button = styled.button`
   width: 100%;
   padding: 10px;
   color: #fff;
-  background-color: #2a45cd;
+  background-color: var(--globalColor);
   border: none;
   outline: none;
   font-size: 16px;

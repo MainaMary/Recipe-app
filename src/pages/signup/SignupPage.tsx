@@ -8,7 +8,7 @@ const Img = require("../../assets/images/harmburger.png");
 const SignupPage = () => {
   return (
     <>
-      <Navbar show={false} />
+      <Navbar show={false} checkBtns={true} />
       <Wrapper>
         <Main>
           <Image>
