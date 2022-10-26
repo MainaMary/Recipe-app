@@ -58,7 +58,6 @@ const Modal = (prop: Prop) => {
           onClick={(e) => {
             e.stopPropagation();
           }}
-          onSubmit={handleSubmit}
         >
           <Close onClick={handleModal}>
             <h3>Meal plan</h3>
@@ -73,7 +72,7 @@ const Modal = (prop: Prop) => {
               ))}
             </Select>
           </Box>
-          <button>submit</button>
+          <button onSubmit={handleSubmit}>submit</button>
         </Wrapper>
       </Main>
       <Diet

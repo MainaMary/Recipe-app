@@ -19,6 +19,8 @@ interface Props {
   name: string;
   value: string;
   required?: boolean;
+  ref?: any;
+  //React.RefObject<HTMLInputElement>
 }
 
 const CustomInput = ({ onChange, name, value, required }: Props) => {

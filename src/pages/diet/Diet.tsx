@@ -10,6 +10,7 @@ interface Props {
 }
 const Diet = (props: Props) => {
   const { isLoading, diet, nutrients } = props;
+  console.log(!isLoading && nutrients, "nutrients");
   return (
     <>
       <Navbar />
