@@ -5,7 +5,8 @@ import { FaTimes, FaBars, FaUserAlt } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { Menu } from "./MenuItems";
-
+import { signOut } from "firebase/auth";
+import { auth } from "../firebaseApp";
 interface Props {
   show?: boolean;
   checkBtns?: boolean;
@@ -17,10 +18,22 @@ interface ModalProps {
 const Modal = (props: ModalProps) => {
   const { showModal, handleModal } = props;
   const currentUser = useContext(UserContext);
+  const [error, setError] = useState<string>("");
+
   const navigate = useNavigate();
   if (!showModal) {
     return null;
   }
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+
+      navigate("/login");
+    } catch (error: any) {
+      console.log(error.message);
+      setError("Failed to log out");
+    }
+  };
   return (
     <Profilewrap>
       <Form>
@@ -41,7 +54,9 @@ const Modal = (props: ModalProps) => {
         </div>
         <ProfileBtns>
           <Btn onClick={() => navigate("/updateProfile")}>Update profile</Btn>
-          <Btn style={{ padding: "4px 8px" }}>Log out</Btn>
+          <Btn style={{ padding: "4px 8px" }} onClick={handleLogout}>
+            Log out
+          </Btn>
         </ProfileBtns>
       </Form>
     </Profilewrap>
