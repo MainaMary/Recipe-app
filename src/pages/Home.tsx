@@ -23,7 +23,7 @@ const Home = () => {
     "getRecipes",
     fetchRecipes
   );
-  console.log(isSuccess && data?.data?.recipes, "data");
+
   const handleImage = (id: string) => {
     navigate(`/recipe/${id}`);
   };

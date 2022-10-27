@@ -1,19 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-// const inputStyles = {
-//   padding: "5px 9px",
-//   outline: "none",
-//   width: "100%",
-//   backgroundColor: "#000",
-// };
-// const InputStyles = {
-//   borderRadius: "5px",
-//   padding: "5px 9px",
-//   outline: "none",
-//   width: "100%",
-//   backgroundColor: "#000",
-// };
 interface Props {
   onChange: (val: any) => void;
   name: string;
