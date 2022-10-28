@@ -11,10 +11,4 @@ export const Menu = [
     url: "/cuisines",
     className: "navLink",
   },
-  // {
-  //   id:3,
-  //   title: "Sign up",
-  //   url: "/signup",
-  //   className: "navBtn",
-  // },
 ];

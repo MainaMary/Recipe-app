@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 interface Props {
-  onChange: (val: any) => void;
+  onChange?: (val: any) => void;
   name: string;
-  value: string;
+  value?: string;
   required?: boolean;
   ref?: any;
   //React.RefObject<HTMLInputElement>
