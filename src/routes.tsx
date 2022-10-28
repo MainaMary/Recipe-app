@@ -9,6 +9,7 @@ import AllCuisines from "./pages/AllCuisines";
 import SearchResults from "./pages/SearchResults";
 import Diet from "./pages/diet/Diet";
 import UpdateProfile from "./pages/updateProfile/UpdateProfile";
+import ForgotPassword from "./pages/forgot/ForgotPassword";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 
 const routes = [
@@ -54,7 +55,7 @@ const routes = [
     protectedR: true,
   },
   {
-    path: `/diet`,
+    path: `/diet/:id`,
     component: <Diet />,
     protectedR: true,
   },
@@ -63,21 +64,31 @@ const routes = [
     component: <UpdateProfile />,
     protectedR: true,
   },
+  {
+    path: `/forgotPassword`,
+    component: <ForgotPassword />,
+    protectedR: false,
+  },
 ];
 const MainRoutes = () => {
   return (
     <Routes>
-      {routes.map(({ path, component, protectedR }, index) => {
-        if (protectedR) {
-          return (
-            <Route element={<ProtectedRoutes />}>
-              <Route key={index} path={path} element={component} />
-            </Route>
-          );
-        } else {
-          return <Route key={index} path={path} element={component} />;
-        }
-      })}
+      {routes.map(
+        ({ path, component, protectedR }, index) => (
+          <Route key={index} path={path} element={component} />
+        )
+        // {
+        //   if (protectedR) {
+        //     return (
+        //       <Route element={<ProtectedRoutes />}>
+        //         <Route key={index} path={path} element={component} />
+        //       </Route>
+        //     );
+        //   } else {
+        //     return <Route key={index} path={path} element={component} />;
+        //   }
+        // }
+      )}
     </Routes>
   );
 };
