@@ -35,23 +35,20 @@ const Modal = (props: ModalProps) => {
     }
   };
   return (
-    <Profilewrap>
-      <Form>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: "8px 0",
-          }}
-        >
-          <p>Profile</p>
-          <p onClick={handleModal}>X</p>
-        </div>
+    <Profilewrap onClick={handleModal}>
+      <Form onClick={(e: any) => e.stopPropagation()}>
+        <div>{error}</div>
+        <UserProfile>
+          <p style={{ fontSize: "16px" }}>Profile</p>
+          <div style={{ fontSize: "16px" }} onClick={handleModal}>
+            <FaTimes />
+          </div>
+        </UserProfile>
 
-        <div>
+        <Email>
           Email
           <p>{currentUser.currentUser?.email}</p>
-        </div>
+        </Email>
         <ProfileBtns>
           <Btn onClick={() => navigate("/updateProfile")}>Update profile</Btn>
           <Btn style={{ padding: "4px 8px" }} onClick={handleLogout}>
@@ -73,6 +70,7 @@ const Navbar = ({ show = true, checkBtns = false }: Props) => {
   };
   const handleModal = () => {
     setShowModal((prev) => !prev);
+    handleClick();
   };
   return (
     <NavWrapper>
@@ -97,7 +95,7 @@ const Navbar = ({ show = true, checkBtns = false }: Props) => {
       ) : null}
       {show && (
         <>
-          <ListWrap>
+          <ListWrap click={click}>
             {Menu.map(({ id, title, url, className }) => {
               console.log(title);
               return (
@@ -106,6 +104,7 @@ const Navbar = ({ show = true, checkBtns = false }: Props) => {
                 </Items>
               );
             })}
+
             <Items className="navBtn" onClick={handleModal}>
               <FaUserAlt className="navBtn" />
             </Items>
@@ -126,14 +125,46 @@ const Navbar = ({ show = true, checkBtns = false }: Props) => {
 export default Navbar;
 
 const Profilewrap = styled.div`
-  position: relative;
+  position: fixed;
   top: 80px;
   right: 36px;
   box-shadow: 0 0 3px #777;
+  background-color: rgba(0, 0, 0, 0.2);
   width: 15%;
+  height: 20vh;
+  boder-radius: 5px;
+  z-index: 100;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    position: fixed;
+  }
+`;
+const Email = styled.div`
+  margin: 16px 0;
+`;
+const UserProfile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+  width: 100%;
+  font-size: 16px;
 `;
 const Form = styled.div`
   padding: 10px 8px;
+  position: absolute;
+  background-color: #fff;
+  max-width: 370px;
+  width: 100%;
+  box-shadow: 0 0 3px #777;
+  @media screen and (max-width: 768px) {
+  }
 `;
 const Btn = styled.button`
   padding: 4px 8px;
@@ -143,11 +174,19 @@ const Btn = styled.button`
   color: #fff;
   border-radius: 3px;
   cursor: pointer;
+  font-size: 16px;
+  @media screen and (max-width: 860px) {
+    width: 45%;
+    padding: 12px 8px;
+  }
 `;
 const ProfileBtns = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 12px 0;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const NavWrapper = styled.nav`
   height: 10vh;
@@ -158,7 +197,7 @@ const NavWrapper = styled.nav`
   padding: 0 20px;
   align-items: center;
 
-  @media screen and (max-width: 860px) {
+  @media screen and (max-width: 768px) {
     transition: 0.8s all ease;
   }
 `;
@@ -166,9 +205,9 @@ const NavWrapper = styled.nav`
 const NavLogo = styled(Link)`
   text-decoration: none;
   font-size: 1.5rem;
-  color: #fff;
+  color: #000;
 `;
-const ListWrap = styled.ul`
+const ListWrap = styled.ul.attrs((props: { click: boolean }) => props)`
   display: flex;
   align-items: center;
   list-style: none;
@@ -176,8 +215,19 @@ const ListWrap = styled.ul`
   width: 70%;
   justify-content: flex-end;
 
-  @media screen and max-width(768px) {
-    display: none;
+  @media screen and (max-width: 768px) {
+    display: flex;
+    top: 10vh;
+    cursor: pointer;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    left: ${(props) => (props.click ? 0 : "-100%")};
+    opacity: 1;
+    transition: all 0.5s ease;
+    background: #101522;
+    height: calc(100vh - 10vh);
+    z-index: 10;
   }
 `;
 const Items = styled.li`
@@ -186,7 +236,21 @@ const Items = styled.li`
   a {
     text-decoration: none;
     padding: 0 20px;
-    color: #fff;
+    color: #000;
+    font-size: 16px;
+    @media screen and (max-width: 768px) {
+      color: var(--globalColor);
+    }
+  }
+  &:hover {
+    border-bottom: 3px solid #fff;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 200px;
+    &:hover {
+      border-bottom: none;
+    }
   }
 `;
 
