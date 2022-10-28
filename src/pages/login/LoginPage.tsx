@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import Navbar from "../../components/Navbar";
 import { Image, LogIn, Main, Wrapper } from "../../styles/styled";
 
-const Img = require("../../assets/images/harmburger.png");
+const Img = require("../../assets/images/hamburgerImg.png");
 const LoginPage = () => {
   return (
     <>

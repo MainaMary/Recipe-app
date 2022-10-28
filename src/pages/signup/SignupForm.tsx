@@ -6,7 +6,6 @@ import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { updateProfile, updateCurrentUser } from "firebase/auth";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -95,11 +94,6 @@ const SignupForm = () => {
         await createUserWithEmailAndPassword(auth, email, password);
         navigate("/login");
       }
-
-      // const userDetails = updateCurrentUser(auth, {
-      //   displayName: formValues.username,
-      // });
-      // console.log(res.user, "res");
 
       setLoading(true);
       setError("");

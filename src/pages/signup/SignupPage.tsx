@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SignupForm from "./SignupForm";
 import Navbar from "../../components/Navbar";
 
-const Img = require("../../assets/images/harmburger.png");
+const Img = require("../../assets/images/hamburgerImg.png");
 
 const SignupPage = () => {
   return (

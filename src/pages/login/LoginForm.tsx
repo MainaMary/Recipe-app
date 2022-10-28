@@ -6,7 +6,7 @@ import {
   FormWrapper,
   Box,
   PasswordWrap,
-  Terms,
+  NavigateForgot,
   Password,
   Button,
 } from "../../styles/styled";
@@ -115,10 +115,11 @@ const LoginForm = () => {
       <Box>
         <Button disabled={loading}>Log in</Button>
       </Box>
-      <div onClick={() => navigate("/")}>
+      <NavigateForgot>
         <p>
           Need an account?{" "}
           <span
+            onClick={() => navigate("/")}
             style={{
               color: "var(--globalColor)",
               textDecoration: "underline",
@@ -130,7 +131,19 @@ const LoginForm = () => {
             Sign up
           </span>
         </p>
-      </div>
+        <p
+          onClick={() => navigate("/forgotPassword")}
+          style={{
+            color: "var(--globalColor)",
+            textDecoration: "underline",
+            marginLeft: "5px",
+            cursor: "pointer",
+            fontWeight: "bolder",
+          }}
+        >
+          Forgot password?
+        </p>
+      </NavigateForgot>
     </FormWrapper>
   );
 };
