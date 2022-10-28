@@ -1,10 +1,5 @@
 import { createContext, useEffect } from "react";
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  User,
-} from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../firebaseApp";
 import { useState } from "react";
 interface Props {

@@ -39,6 +39,9 @@ const Input = styled.input`
   background-color: #fff;
   border-bottom-left-radius: 5px;
   font-size: 16px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const Wrapper = styled.form`
   padding: 30px 20px;
