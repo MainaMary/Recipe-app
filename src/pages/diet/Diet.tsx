@@ -2,6 +2,9 @@ import React from "react";
 import Navbar from "../../components/Navbar";
 import CustomLoader from "../../components/CustomLoader";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 interface Props {
   isLoading?: boolean;
@@ -9,8 +12,16 @@ interface Props {
   nutrients?: any[];
 }
 const Diet = (props: Props) => {
-  const { isLoading, diet, nutrients } = props;
-  console.log(!isLoading && nutrients, "nutrients");
+  const { id } = useParams();
+  console.log(id, "id");
+  const fetchDiet = async () => {
+    const response = await axios(
+      `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}&timeFrame=day&diet=${id}`
+    );
+    return response;
+  };
+  const { data, isLoading } = useQuery(["fetch-diet", id], fetchDiet);
+  console.log(data, "data diet component");
   return (
     <>
       <Navbar />

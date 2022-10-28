@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useQuery } from "react-query";
-import axios from "axios";
-import Diet from "../pages/diet/Diet";
 import { useNavigate } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
+import { ModalBtn } from "../styles/styled";
 
 interface Prop {
   openModal: boolean;
@@ -36,35 +35,32 @@ const Modal = (prop: Prop) => {
   const handleSelect = (e: any) => {
     setDiet(e.target.value);
   };
-  const fetchDiet = async () => {
-    const response = await axios(
-      `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}&timeFrame=day&diet=${diet}`
-    );
-    return response;
-  };
-  const { data, isLoading } = useQuery(["fetch-diet", diet], fetchDiet);
 
   if (!openModal) {
     return null;
   }
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/diet");
+    navigate(`/diet/${diet}`);
   };
   return (
     <>
-      <Main onClick={handleModal}>
+      <Main>
         <Wrapper
           onClick={(e) => {
             e.stopPropagation();
           }}
+          onSubmit={handleSubmit}
         >
           <Close onClick={handleModal}>
             <h3>Meal plan</h3>
-            <p style={{ cursor: "pointer" }}>X</p>
+            <div style={{ cursor: "pointer" }}>
+              <FaTimes />
+            </div>
           </Close>
           <Box>
             <Select value={diet} onChange={handleSelect}>
+              <Option>Select diet..</Option>
               {dietArr.map((item: DietProps) => (
                 <Option key={item.id} value={item.value}>
                   {item.label}
@@ -72,14 +68,9 @@ const Modal = (prop: Prop) => {
               ))}
             </Select>
           </Box>
-          <button onSubmit={handleSubmit}>submit</button>
+          <ModalBtn>submit</ModalBtn>
         </Wrapper>
       </Main>
-      <Diet
-        isLoading={isLoading}
-        diet={data?.data?.meals}
-        nutrients={data?.data?.nutrients}
-      />
     </>
   );
 };
@@ -95,6 +86,9 @@ const Main = styled.div`
   justify-content: center;
   height: 100%;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    padding: 0 16px;
+  }
 `;
 const Close = styled.div`
   height: 20px;
@@ -108,8 +102,9 @@ const Wrapper = styled.form`
   width: 100%;
   max-width: 500px;
   box-shadow: 0 0 3px #777;
-  padding: 10px 16px;
+  padding: 32px 16px;
   border-radius: 5px;
+  background-color: #fff;
 `;
 const Box = styled.div`
   margin: 12px 0;
@@ -120,9 +115,15 @@ const Select = styled.select`
   border: 1px solid #737373;
   border-radius: 5px;
   outline: none;
-  font-size: 12px;
+  font-size: 16px;
+  position: relative;
 `;
 const Option = styled.option`
   font-size: 16px;
   padding-left: 10px;
+  background-color: var(--globalColor);
+  border-bottom: 1px solid #fff;
+  &:hover {
+    background-color: none;
+  }
 `;

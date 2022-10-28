@@ -2,18 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { FaJava } from "react-icons/fa";
-import { IconType } from "react-icons/lib";
 import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
 interface Props {
   cuisine?: string;
 }
-interface IProps {
-  label: string;
-  link: string;
-  icon: IconType;
-}
+
 const Cuisines = ({ cuisine }: Props) => {
   const [italian, setItalian] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -78,15 +73,15 @@ const Cuisines = ({ cuisine }: Props) => {
   return (
     <>
       <Navbar />
-      <Main></Main>
+
       <CuisineWrap>
         {cuisinesType.map((item: any) => (
-          <div>
+          <ItemWrapper>
             <Path to={item.link}>
               <FaJava />
               <h4>{item.label}</h4>
             </Path>
-          </div>
+          </ItemWrapper>
         ))}
         <Container>
           <Button onClick={handleModal}>Get meal plan</Button>
@@ -119,12 +114,21 @@ const CuisineWrap = styled.div`
   height: 64px;
   align-items: center;
   @media screen and (max-width: 768px) {
+    flex-direction: column;
   }
 `;
-const Main = styled.div``;
+const ItemWrapper = styled.div`
+  @media screen and (max-width: 768px) {
+    text-align: start;
+    margin: 4px 0;
+    width: 100%;
+    box-shadow: var(--boxShadow);
+    border-radius: var(--borderRadius);
+  }
+`;
 const Button = styled.button`
   text-align: center;
-  background-color: #2a45cd;
+  background-color: var(--globalColor);
   color: #fff;
   padding: 8px 20px;
   width: 30%;
@@ -132,6 +136,10 @@ const Button = styled.button`
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  border: 1px solid #fff;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const Container = styled.div`
   width: 40%;
@@ -139,6 +147,8 @@ const Container = styled.div`
   padding: 0px 32px;
   @media screen and (max-width: 768px) {
     display: block;
+    width: 100%;
+    margin: 16px 0;
   }
 `;
 const Path = styled(NavLink)`
