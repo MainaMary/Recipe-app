@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import CustomLoader from "../../components/CustomLoader";
 import styled from "styled-components";
@@ -13,6 +13,7 @@ interface Props {
 }
 const Diet = (props: Props) => {
   const { id } = useParams();
+  const [mealId, setMealId] = useState("");
   console.log(id, "id");
   const fetchDiet = async () => {
     const response = await axios(
@@ -38,7 +39,12 @@ const Diet = (props: Props) => {
               <CustomLoader />
             </div>
           ) : (
-            <p>Diet plan</p>
+            <Grid>
+              {data?.data?.meals.map((item: any) => {
+                setMealId(item.id);
+                return <div></div>;
+              })}
+            </Grid>
           )}
         </Grid>
       }
