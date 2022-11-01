@@ -41,8 +41,11 @@ const Diet = (props: Props) => {
           ) : (
             <Grid>
               {data?.data?.meals.map((item: any) => {
-                setMealId(item.id);
-                return <div></div>;
+                return (
+                  <div key={item.id}>
+                    <h3>{item.title}</h3>
+                  </div>
+                );
               })}
             </Grid>
           )}
