@@ -23,6 +23,10 @@ const Diet = (props: Props) => {
   };
   const { data, isLoading } = useQuery(["fetch-diet", id], fetchDiet);
   console.log(data, "data diet component");
+  let objectClone = {};
+  objectClone = { ...data?.data?.meals, ...data?.data?.nutrients };
+  console.log(objectClone, "object");
+
   return (
     <>
       <Navbar />
@@ -40,6 +44,14 @@ const Diet = (props: Props) => {
             </div>
           ) : (
             <Grid>
+              <div>
+                {Object.entries(data?.data?.nutrients).map((item: any) => (
+                  <div>
+                    <p>{item[0]}</p>
+                    <p>{item[1].toFixed(0)}</p>
+                  </div>
+                ))}
+              </div>
               {data?.data?.meals.map((item: any) => {
                 return (
                   <div key={item.id}>
