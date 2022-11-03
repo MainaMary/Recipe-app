@@ -61,7 +61,7 @@ const AllCuisines = () => {
           ) : (
             data?.data?.results.map((item: IProps) => (
               <Box key={item.id} onClick={() => handleMeal(item.id)}>
-                <img alt={item.title} src={item.image} />
+                <img alt={item.title} src={item.image} loading="lazy" />
                 <h3>{item.title}</h3>
               </Box>
             ))

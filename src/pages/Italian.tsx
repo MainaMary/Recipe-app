@@ -22,7 +22,7 @@ const Italian = () => {
       <Grid>
         {italian.map((item: any) => (
           <Box key={item.id}>
-            <img alt={item.title} src={item.image} />
+            <img alt={item.title} src={item.image} loading="lazy" />
             <h3>{item.title}</h3>
           </Box>
         ))}

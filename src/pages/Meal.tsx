@@ -107,6 +107,7 @@ const Meal = () => {
               style={{ borderRadius: "20px" }}
               src={data?.data?.image}
               alt={id}
+              loading="lazy"
             />
           </>
           <div

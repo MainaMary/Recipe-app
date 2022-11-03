@@ -48,7 +48,7 @@ const Home = () => {
                 <Box key={index}>
                   <Title>{recipe.title}</Title>
                   <Image>
-                    <img src={recipe.image} alt={recipe.title} />
+                    <img src={recipe.image} alt={recipe.title} loading="lazy" />
                     <More onClick={() => handleImage(recipe.id)}>
                       <p>See more</p>
                     </More>

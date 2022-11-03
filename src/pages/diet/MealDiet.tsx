@@ -27,7 +27,7 @@ const MealDiet = ({ meal }: Props) => {
         {isLoading ? (
           <h3>Loading...</h3>
         ) : (
-          <Image src={data?.data?.image} alt={meal.title} />
+          <Image src={data?.data?.image} alt={meal.title} loading="lazy" />
         )}
 
         <Title>Number of minutes {meal.readyInMinutes}</Title>
@@ -63,6 +63,7 @@ const Image = styled.img`
   height: auto;
   border-radius: var(--borderRadius);
   margin: 12px 0;
+  object-fit: cover;
 `;
 const Title = styled.h3`
   margin: 12px 0;
