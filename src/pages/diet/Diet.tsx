@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
+import MealDiet from "./MealDiet";
 
 interface Props {
   isLoading?: boolean;
@@ -13,8 +14,7 @@ interface Props {
 }
 const Diet = (props: Props) => {
   const { id } = useParams();
-  const [mealId, setMealId] = useState("");
-  console.log(id, "id");
+
   const fetchDiet = async () => {
     const response = await axios(
       `https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.REACT_APP_API_KEY}&timeFrame=day&diet=${id}`
@@ -31,7 +31,7 @@ const Diet = (props: Props) => {
     <>
       <Navbar />
       {
-        <Grid>
+        <>
           {isLoading ? (
             <div
               style={{
@@ -43,25 +43,24 @@ const Diet = (props: Props) => {
               <CustomLoader />
             </div>
           ) : (
-            <Grid>
+            <>
               <div>
-                {Object.entries(data?.data?.nutrients).map((item: any) => (
-                  <div>
-                    <p>{item[0]}</p>
-                    <p>{item[1].toFixed(0)}</p>
-                  </div>
+                {data?.data?.nutrients &&
+                  Object.entries(data?.data?.nutrients)?.map((item: any) => (
+                    <div>
+                      <p>{item[0]}</p>
+                      <p>{item[1].toFixed(0)}</p>
+                    </div>
+                  ))}
+              </div>
+              <div>
+                {data?.data?.meals.map((meal: any) => (
+                  <MealDiet key={meal.id} meal={meal} />
                 ))}
               </div>
-              {data?.data?.meals.map((item: any) => {
-                return (
-                  <div key={item.id}>
-                    <h3>{item.title}</h3>
-                  </div>
-                );
-              })}
-            </Grid>
+            </>
           )}
-        </Grid>
+        </>
       }
     </>
   );

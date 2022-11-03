@@ -16,7 +16,7 @@ const Italian = () => {
   useEffect(() => {
     fetchItalian();
   }, []);
-  console.log(italian, "italian");
+
   return (
     <div>
       <Grid>

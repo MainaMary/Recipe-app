@@ -75,7 +75,7 @@ const Meal = () => {
     return response;
   };
   const { data, isLoading, isSuccess } = useQuery(["get-recipes"], getRecipes);
-  console.log(data?.data, "data");
+
   const handleToggle = (tabIndex: number) => {
     setToggle(tabIndex);
   };
