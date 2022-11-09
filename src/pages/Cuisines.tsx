@@ -5,6 +5,7 @@ import { FaJava } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
+import { useNavigate } from "react-router-dom";
 interface Props {
   cuisine?: string;
 }
@@ -69,7 +70,10 @@ const Cuisines = ({ cuisine }: Props) => {
       icon: <FaJava />,
     },
   ];
-
+  const navigate = useNavigate();
+  const handleNavigate = (id: string) => {
+    navigate(`/recipe/${id}`);
+  };
   return (
     <>
       <Navbar />
@@ -92,6 +96,7 @@ const Cuisines = ({ cuisine }: Props) => {
           <Box key={item.id}>
             <img alt={item.title} src={item.image} loading="lazy" />
             <h3>{item.title}</h3>
+            <Button onClick={() => handleNavigate(item.id)}>See more</Button>
           </Box>
         ))}
       </Grid>
@@ -131,7 +136,7 @@ const Button = styled.button`
   background-color: var(--globalColor);
   color: #fff;
   padding: 8px 20px;
-  width: 30%;
+  width: 50%;
   outline: none;
   border-radius: 5px;
   font-size: 16px;

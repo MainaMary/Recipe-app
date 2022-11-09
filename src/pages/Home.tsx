@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import styled from "styled-components";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Button } from "../styles/styled";
 import { useNavigate } from "react-router-dom";
 import CustomLoader from "../components/CustomLoader";
 import { UserContext } from "../context/UserContext";
-import { signOut } from "firebase/auth";
+
 const Home = () => {
   let navigate = useNavigate();
   const userProfile = useContext(UserContext);
@@ -19,10 +19,7 @@ const Home = () => {
     return res;
   };
 
-  const { data, isLoading, isError, isSuccess } = useQuery(
-    "getRecipes",
-    fetchRecipes
-  );
+  const { data, isLoading, isSuccess } = useQuery("getRecipes", fetchRecipes);
 
   const handleImage = (id: string) => {
     navigate(`/recipe/${id}`);
@@ -49,10 +46,10 @@ const Home = () => {
                   <Title>{recipe.title}</Title>
                   <Image>
                     <img src={recipe.image} alt={recipe.title} loading="lazy" />
-                    <More onClick={() => handleImage(recipe.id)}>
-                      <p>See more</p>
-                    </More>
                   </Image>
+                  <Button onClick={() => handleImage(recipe.id)}>
+                    <p>See more</p>
+                  </Button>
                 </Box>
               ))}
             </Grid>
@@ -83,42 +80,41 @@ const Popular = styled.h2`
   font-weight: 500;
 `;
 const Image = styled.div`
-  position: relative;
-  height: 300px;
-  width: 400px;
-  &:hover {
-    // transform: scale(1.1);
-  }
   img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--borderRadius);
+    margin: 12px 0;
     object-fit: cover;
-    width: 300px;
-    height: 400px;
   }
 `;
-const More = styled.div`
-  position: absolute;
-  background-color: rgba(216, 207, 197, 0.8);
-  text-align: center;
-  width: 75%;
-  color: #000;
-  font-size: 20px;
-  bottom: -10px;
-  padding: 12px 0;
-  left: 0;
-  cursor: pointer;
-  p {
-    color: rgba(244, 159, 47, 0.8);
-    font-weight: bold;
-  }
-`;
+// const More = styled.div`
+//   position: absolute;
+//   background-color: rgba(216, 207, 197, 0.8);
+//   text-align: center;
+//   width: 75%;
+//   color: #000;
+//   font-size: 20px;
+//   bottom: -10px;
+//   padding: 12px 0;
+//   left: 0;
+//   cursor: pointer;
+//   p {
+//     color: rgba(244, 159, 47, 0.8);
+//     font-weight: bold;
+//   }
+// `;
 const Box = styled.div`
-  margin: 12px auto;
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 12px auto;
-  padding: 10px 20px;
+  box-shadow: var(--boxShadow);
+  border-radius: var(--borderRadius);
+  max-width: 300px;
+  width: 100%;
+  margin: auto;
 
-  img {
-    border-radius: 10px;
+  padding: 8px 16px 24px 16px;
+  margin: 12px 0;
+
+  @media screen and (max-width: 768px) {
+    max-width: 400px;
   }
 `;
