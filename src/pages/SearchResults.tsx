@@ -5,7 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import CustomLoader from "../components/CustomLoader";
-import { Loader } from "../styles/styled";
 
 const SearchResults = () => {
   const { query } = useParams();

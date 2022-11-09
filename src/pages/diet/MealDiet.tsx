@@ -39,8 +39,9 @@ const MealDiet = ({ meal }: Props) => {
 
 export default MealDiet;
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 12px;
   @media screen and (max-width: 768px) {
     flex-direction: column;
   }
@@ -53,6 +54,8 @@ const Card = styled.div`
   margin: auto;
   height: 380px;
   padding: 8px 16px;
+  margin: 12px 0;
+
   @media screen and (max-width: 768px) {
     max-width: 400px;
   }

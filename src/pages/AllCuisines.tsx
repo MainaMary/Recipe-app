@@ -6,9 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Cuisines from "./Cuisines";
 import CustomLoader from "../components/CustomLoader";
 
-interface Props {
-  cuisine?: string;
-}
 interface IProps {
   id: string;
   title: string;
@@ -16,7 +13,7 @@ interface IProps {
   imageType: string;
 }
 const AllCuisines = () => {
-  const [italian, setItalian] = useState([]);
+  const [_, setItalian] = useState([]);
   const navigate = useNavigate();
   const { cuisine } = useParams();
   const handleMeal = (id: string) => {
@@ -28,7 +25,7 @@ const AllCuisines = () => {
       `);
     return response;
   };
-  const { data, isSuccess, isLoading } = useQuery(
+  const { data, error, isLoading } = useQuery(
     ["get cuisines", cuisine],
     fetchCuisines
   );
@@ -58,6 +55,8 @@ const AllCuisines = () => {
             >
               <CustomLoader />
             </div>
+          ) : error ? (
+            <h2>Deplted the number of requests.Please try again.</h2>
           ) : (
             data?.data?.results.map((item: IProps) => (
               <Box key={item.id} onClick={() => handleMeal(item.id)}>

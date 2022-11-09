@@ -74,7 +74,7 @@ const Meal = () => {
     );
     return response;
   };
-  const { data, isLoading, isSuccess } = useQuery(["get-recipes"], getRecipes);
+  const { data, isSuccess } = useQuery(["get-recipes"], getRecipes);
 
   const handleToggle = (tabIndex: number) => {
     setToggle(tabIndex);
@@ -188,13 +188,4 @@ const Tab = styled.h2`
   justify-content: space-around;
   margin: auto;
   width: 40%;
-`;
-const Box = styled.ul`
-width: "50%",
-margin: "auto",
-textAlign: "start",`;
-const List = styled.li`
-color: #737373, 
-margin: 10px 0, 
-font-size: 18px
 `;
